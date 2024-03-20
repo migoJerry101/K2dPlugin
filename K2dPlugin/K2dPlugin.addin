@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+	<AddIn Type="Application">
+		<Name>K2d</Name>
+		<Assembly>K2dPlugin.dll</Assembly>
+		<AddInId>66333AB5-17E8-4CB8-8AA1-F880F191D7D6</AddInId>
+		<FullClassName>K2dPlugin.Application</FullClassName>
+		<VendorId>K2dDev</VendorId>
+		<VendorDescription>https://github.com/migoJerry101</VendorDescription>
+	</AddIn>
+</RevitAddIns>
