@@ -5,10 +5,16 @@ using System.Reflection;
 using Autodesk.Revit.UI;
 using System.Windows.Media.Imaging;
 using System.IO;
+using K2dPlugin.Features.PipeSum;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI.Events;
 
 
 namespace K2dPlugin
 {
+    [Transaction(TransactionMode.Manual)]
+    //[Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
 
@@ -22,15 +28,15 @@ namespace K2dPlugin
             var panel = RibbonPanel(application);
             var assemblyPath = Assembly.GetExecutingAssembly().Location;
 
-            if (panel.AddItem(new PushButtonData("pipeSum", "pipeSum", assemblyPath, "K2dPlugin.Command"))
+            if (panel.AddItem(new PushButtonData("pipeSum", "pipeSum", assemblyPath, typeof(PipeSumCommand).ToString()))
                 is PushButton button)
             {
                 button.ToolTip = "Pipe Sum";
 
-                //var uri = new Uri(Path.Combine(Path.GetDirectoryName(assemblyPath), "Resources", "pipe.ico"));
-                //var bitmap = new BitmapImage(uri);
+                var uri = new Uri(Path.Combine(Path.GetDirectoryName(assemblyPath), "Resources", "pipe.ico"));
+                var bitmap = new BitmapImage(uri);
 
-                //button.LargeImage = bitmap;
+                button.Image = bitmap;
             }
 
             return Result.Succeeded;
@@ -44,8 +50,6 @@ namespace K2dPlugin
             try
             {
                 application.CreateRibbonTab(tabName);
-
-   
             }
             catch (Exception e)
             {
@@ -67,6 +71,5 @@ namespace K2dPlugin
 
             return ribbonPanel;
         }
-
     }
 }
