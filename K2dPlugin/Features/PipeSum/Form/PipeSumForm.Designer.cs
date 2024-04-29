@@ -32,7 +32,7 @@ namespace K2dPlugin.Features.PipeSum.Form
         {
             this.components = new System.ComponentModel.Container();
             this.PipeSumTab = new System.Windows.Forms.TabControl();
-            this.SanitaitonTab = new System.Windows.Forms.TabPage();
+            this.SanitaryTab = new System.Windows.Forms.TabPage();
             this.SanitationHeadLocation = new System.Windows.Forms.GroupBox();
             this.RIghtArrowLocation = new System.Windows.Forms.RadioButton();
             this.LeftArrowLocation = new System.Windows.Forms.RadioButton();
@@ -54,13 +54,57 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.SanitaionPipeSystemLabel = new System.Windows.Forms.Label();
             this.SanitationComboBox = new System.Windows.Forms.ComboBox();
             this.WaterTab = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.WaterApplyBtn = new System.Windows.Forms.Button();
+            this.WaterPipeSizeLabel = new System.Windows.Forms.Label();
+            this.WaterPipeSizeComboBox = new System.Windows.Forms.ComboBox();
+            this.WaterOverrideBtn = new System.Windows.Forms.Button();
+            this.PsiPerFootLabel = new System.Windows.Forms.Label();
+            this.PsiPerFootComboBox = new System.Windows.Forms.ComboBox();
+            this.WaterTotalSelectedLabel = new System.Windows.Forms.Label();
+            this.WaterRestBtn = new System.Windows.Forms.Button();
+            this.WaterSelectBtn = new System.Windows.Forms.Button();
+            this.FlushSettingsLabel = new System.Windows.Forms.Label();
+            this.FlushSettingComboBox = new System.Windows.Forms.ComboBox();
+            this.WaterSystemGroupBox = new System.Windows.Forms.GroupBox();
+            this.HotRadioBtn = new System.Windows.Forms.RadioButton();
+            this.ColdRadioBtn = new System.Windows.Forms.RadioButton();
+            this.WaterDataGrid = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WaterMeterialGroupBox = new System.Windows.Forms.GroupBox();
+            this.PexRadioBtn = new System.Windows.Forms.RadioButton();
+            this.CpvcRadioBtn = new System.Windows.Forms.RadioButton();
+            this.CopperRadioBtn = new System.Windows.Forms.RadioButton();
             this.GasTab = new System.Windows.Forms.TabPage();
+            this.WaterLenthLabel = new System.Windows.Forms.Label();
+            this.GasLeaderLocationBox = new System.Windows.Forms.GroupBox();
+            this.GasRightLeaderLocation = new System.Windows.Forms.RadioButton();
+            this.GasLeftLeaderLocation = new System.Windows.Forms.RadioButton();
+            this.GasTotalLengthLabel = new System.Windows.Forms.Label();
+            this.GasReset = new System.Windows.Forms.Button();
+            this.GasSelectBtn = new System.Windows.Forms.Button();
+            this.GasApplyBtn = new System.Windows.Forms.Button();
+            this.GasPipeSizelabel = new System.Windows.Forms.Label();
+            this.GasDataGrid = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GasLengthComboBox = new System.Windows.Forms.ComboBox();
             this.PressureBox = new System.Windows.Forms.GroupBox();
             this.RadioBtnPressureMed = new System.Windows.Forms.RadioButton();
-            this.RadioBtnPressureLow = new System.Windows.Forms.RadioButton();
+            this.LowPressureGasRadioBtn = new System.Windows.Forms.RadioButton();
             this.StormDrainTab = new System.Windows.Forms.TabPage();
+            this.StormDrainMaxLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.RightLeaderRadioBtn = new System.Windows.Forms.RadioButton();
+            this.LeftLeaderRadioBtn = new System.Windows.Forms.RadioButton();
+            this.GroupBoxStormDrain = new System.Windows.Forms.GroupBox();
             this.StormDrainRadioBtn3Hr = new System.Windows.Forms.RadioButton();
             this.StormDrainRadioBtn2Hr = new System.Windows.Forms.RadioButton();
             this.StormDrainRadioBtn1Hr = new System.Windows.Forms.RadioButton();
@@ -72,30 +116,36 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
+            this.StormDrainApplyBtn = new System.Windows.Forms.Button();
             this.StormDrainOverrideBtn = new System.Windows.Forms.Button();
             this.StormDrainSizeComboBox = new System.Windows.Forms.ComboBox();
             this.StormDrainPipeSizeLabel = new System.Windows.Forms.Label();
-            this.AreaSelectedTextBox = new System.Windows.Forms.TextBox();
-            this.SelectedAreaLabel = new System.Windows.Forms.Label();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.PipeSumCloseBtn = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.PipeSumTab.SuspendLayout();
-            this.SanitaitonTab.SuspendLayout();
+            this.SanitaryTab.SuspendLayout();
             this.SanitationHeadLocation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SanitationGridView)).BeginInit();
+            this.WaterTab.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.WaterSystemGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WaterDataGrid)).BeginInit();
+            this.WaterMeterialGroupBox.SuspendLayout();
             this.GasTab.SuspendLayout();
+            this.GasLeaderLocationBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GasDataGrid)).BeginInit();
             this.PressureBox.SuspendLayout();
             this.StormDrainTab.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.GroupBoxStormDrain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StormDrainGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // PipeSumTab
             // 
-            this.PipeSumTab.Controls.Add(this.SanitaitonTab);
+            this.PipeSumTab.Controls.Add(this.SanitaryTab);
             this.PipeSumTab.Controls.Add(this.WaterTab);
             this.PipeSumTab.Controls.Add(this.GasTab);
             this.PipeSumTab.Controls.Add(this.StormDrainTab);
@@ -106,35 +156,35 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.PipeSumTab.TabIndex = 0;
             this.PipeSumTab.Click += new System.EventHandler(this.PipeSum_SelectedIndexChanged);
             // 
-            // SanitaitonTab
+            // SanitaryTab
             // 
-            this.SanitaitonTab.Controls.Add(this.SanitationHeadLocation);
-            this.SanitaitonTab.Controls.Add(this.ApplyBtn);
-            this.SanitaitonTab.Controls.Add(this.PipeSizeLabel);
-            this.SanitaitonTab.Controls.Add(this.PipeSizeComboBox);
-            this.SanitaitonTab.Controls.Add(this.SanitationTotalSelectedLabel);
-            this.SanitaitonTab.Controls.Add(this.SanitaryResetTxtBtn);
-            this.SanitaitonTab.Controls.Add(this.SanitationSelectTxtBtn);
-            this.SanitaitonTab.Controls.Add(this.SanitationGridView);
-            this.SanitaitonTab.Controls.Add(this.SanitaionMaxUnitLabel);
-            this.SanitaitonTab.Controls.Add(this.SanitationFixtureConnectionLabel);
-            this.SanitaitonTab.Controls.Add(this.FixtureConnectionBox);
-            this.SanitaitonTab.Controls.Add(this.SanitationOverrideBtn);
-            this.SanitaitonTab.Controls.Add(this.SanitaionPipeSystemLabel);
-            this.SanitaitonTab.Controls.Add(this.SanitationComboBox);
-            this.SanitaitonTab.Location = new System.Drawing.Point(4, 22);
-            this.SanitaitonTab.Name = "SanitaitonTab";
-            this.SanitaitonTab.Padding = new System.Windows.Forms.Padding(3);
-            this.SanitaitonTab.Size = new System.Drawing.Size(623, 367);
-            this.SanitaitonTab.TabIndex = 0;
-            this.SanitaitonTab.Text = "Sanitation";
-            this.SanitaitonTab.UseVisualStyleBackColor = true;
+            this.SanitaryTab.Controls.Add(this.SanitationHeadLocation);
+            this.SanitaryTab.Controls.Add(this.ApplyBtn);
+            this.SanitaryTab.Controls.Add(this.PipeSizeLabel);
+            this.SanitaryTab.Controls.Add(this.PipeSizeComboBox);
+            this.SanitaryTab.Controls.Add(this.SanitationTotalSelectedLabel);
+            this.SanitaryTab.Controls.Add(this.SanitaryResetTxtBtn);
+            this.SanitaryTab.Controls.Add(this.SanitationSelectTxtBtn);
+            this.SanitaryTab.Controls.Add(this.SanitationGridView);
+            this.SanitaryTab.Controls.Add(this.SanitaionMaxUnitLabel);
+            this.SanitaryTab.Controls.Add(this.SanitationFixtureConnectionLabel);
+            this.SanitaryTab.Controls.Add(this.FixtureConnectionBox);
+            this.SanitaryTab.Controls.Add(this.SanitationOverrideBtn);
+            this.SanitaryTab.Controls.Add(this.SanitaionPipeSystemLabel);
+            this.SanitaryTab.Controls.Add(this.SanitationComboBox);
+            this.SanitaryTab.Location = new System.Drawing.Point(4, 22);
+            this.SanitaryTab.Name = "SanitaryTab";
+            this.SanitaryTab.Padding = new System.Windows.Forms.Padding(3);
+            this.SanitaryTab.Size = new System.Drawing.Size(623, 367);
+            this.SanitaryTab.TabIndex = 0;
+            this.SanitaryTab.Text = "Sanitary";
+            this.SanitaryTab.UseVisualStyleBackColor = true;
             // 
             // SanitationHeadLocation
             // 
             this.SanitationHeadLocation.Controls.Add(this.RIghtArrowLocation);
             this.SanitationHeadLocation.Controls.Add(this.LeftArrowLocation);
-            this.SanitationHeadLocation.Location = new System.Drawing.Point(33, 220);
+            this.SanitationHeadLocation.Location = new System.Drawing.Point(33, 228);
             this.SanitationHeadLocation.Name = "SanitationHeadLocation";
             this.SanitationHeadLocation.Size = new System.Drawing.Size(200, 53);
             this.SanitationHeadLocation.TabIndex = 17;
@@ -169,7 +219,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             // 
             this.ApplyBtn.BackColor = System.Drawing.Color.Transparent;
             this.ApplyBtn.ForeColor = System.Drawing.Color.IndianRed;
-            this.ApplyBtn.Location = new System.Drawing.Point(81, 290);
+            this.ApplyBtn.Location = new System.Drawing.Point(85, 302);
             this.ApplyBtn.Name = "ApplyBtn";
             this.ApplyBtn.Size = new System.Drawing.Size(113, 37);
             this.ApplyBtn.TabIndex = 16;
@@ -188,12 +238,14 @@ namespace K2dPlugin.Features.PipeSum.Form
             // 
             // PipeSizeComboBox
             // 
+            this.PipeSizeComboBox.Enabled = false;
             this.PipeSizeComboBox.FormattingEnabled = true;
-            this.PipeSizeComboBox.Location = new System.Drawing.Point(33, 150);
+            this.PipeSizeComboBox.Location = new System.Drawing.Point(134, 123);
             this.PipeSizeComboBox.Name = "PipeSizeComboBox";
             this.PipeSizeComboBox.Size = new System.Drawing.Size(125, 21);
             this.PipeSizeComboBox.TabIndex = 14;
             this.PipeSizeComboBox.Text = "Select Override Size";
+            this.PipeSizeComboBox.Visible = false;
             this.PipeSizeComboBox.SelectedIndexChanged += new System.EventHandler(this.PipeSizeComboBox_SelectedIndexChanged);
             // 
             // SanitationTotalSelectedLabel
@@ -288,7 +340,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             // SanitaionMaxUnitLabel
             // 
             this.SanitaionMaxUnitLabel.AutoSize = true;
-            this.SanitaionMaxUnitLabel.Location = new System.Drawing.Point(30, 191);
+            this.SanitaionMaxUnitLabel.Location = new System.Drawing.Point(30, 199);
             this.SanitaionMaxUnitLabel.Name = "SanitaionMaxUnitLabel";
             this.SanitaionMaxUnitLabel.Size = new System.Drawing.Size(59, 13);
             this.SanitaionMaxUnitLabel.TabIndex = 8;
@@ -314,7 +366,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             // SanitationOverrideBtn
             // 
             this.SanitationOverrideBtn.ForeColor = System.Drawing.Color.IndianRed;
-            this.SanitationOverrideBtn.Location = new System.Drawing.Point(178, 145);
+            this.SanitationOverrideBtn.Location = new System.Drawing.Point(33, 153);
             this.SanitationOverrideBtn.Name = "SanitationOverrideBtn";
             this.SanitationOverrideBtn.Size = new System.Drawing.Size(81, 29);
             this.SanitationOverrideBtn.TabIndex = 6;
@@ -343,6 +395,21 @@ namespace K2dPlugin.Features.PipeSum.Form
             // 
             // WaterTab
             // 
+            this.WaterTab.Controls.Add(this.groupBox2);
+            this.WaterTab.Controls.Add(this.WaterApplyBtn);
+            this.WaterTab.Controls.Add(this.WaterPipeSizeLabel);
+            this.WaterTab.Controls.Add(this.WaterPipeSizeComboBox);
+            this.WaterTab.Controls.Add(this.WaterOverrideBtn);
+            this.WaterTab.Controls.Add(this.PsiPerFootLabel);
+            this.WaterTab.Controls.Add(this.PsiPerFootComboBox);
+            this.WaterTab.Controls.Add(this.WaterTotalSelectedLabel);
+            this.WaterTab.Controls.Add(this.WaterRestBtn);
+            this.WaterTab.Controls.Add(this.WaterSelectBtn);
+            this.WaterTab.Controls.Add(this.FlushSettingsLabel);
+            this.WaterTab.Controls.Add(this.FlushSettingComboBox);
+            this.WaterTab.Controls.Add(this.WaterSystemGroupBox);
+            this.WaterTab.Controls.Add(this.WaterDataGrid);
+            this.WaterTab.Controls.Add(this.WaterMeterialGroupBox);
             this.WaterTab.Location = new System.Drawing.Point(4, 22);
             this.WaterTab.Name = "WaterTab";
             this.WaterTab.Padding = new System.Windows.Forms.Padding(3);
@@ -351,8 +418,305 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.WaterTab.Text = "Water";
             this.WaterTab.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.radioButton1);
+            this.groupBox2.Controls.Add(this.radioButton2);
+            this.groupBox2.Location = new System.Drawing.Point(41, 254);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(200, 53);
+            this.groupBox2.TabIndex = 38;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Leader Location";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(112, 22);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(53, 17);
+            this.radioButton1.TabIndex = 1;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Right";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(28, 22);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(44, 17);
+            this.radioButton2.TabIndex = 0;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Left";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // WaterApplyBtn
+            // 
+            this.WaterApplyBtn.BackColor = System.Drawing.Color.Transparent;
+            this.WaterApplyBtn.ForeColor = System.Drawing.Color.IndianRed;
+            this.WaterApplyBtn.Location = new System.Drawing.Point(85, 319);
+            this.WaterApplyBtn.Name = "WaterApplyBtn";
+            this.WaterApplyBtn.Size = new System.Drawing.Size(113, 37);
+            this.WaterApplyBtn.TabIndex = 37;
+            this.WaterApplyBtn.Text = "Apply Update";
+            this.WaterApplyBtn.UseVisualStyleBackColor = false;
+            this.WaterApplyBtn.Click += new System.EventHandler(this.WaterApplyBtn_Click);
+            // 
+            // WaterPipeSizeLabel
+            // 
+            this.WaterPipeSizeLabel.AutoSize = true;
+            this.WaterPipeSizeLabel.Location = new System.Drawing.Point(21, 210);
+            this.WaterPipeSizeLabel.Name = "WaterPipeSizeLabel";
+            this.WaterPipeSizeLabel.Size = new System.Drawing.Size(58, 13);
+            this.WaterPipeSizeLabel.TabIndex = 36;
+            this.WaterPipeSizeLabel.Text = "Pipe Size: ";
+            // 
+            // WaterPipeSizeComboBox
+            // 
+            this.WaterPipeSizeComboBox.Enabled = false;
+            this.WaterPipeSizeComboBox.FormattingEnabled = true;
+            this.WaterPipeSizeComboBox.Location = new System.Drawing.Point(123, 207);
+            this.WaterPipeSizeComboBox.Name = "WaterPipeSizeComboBox";
+            this.WaterPipeSizeComboBox.Size = new System.Drawing.Size(75, 21);
+            this.WaterPipeSizeComboBox.TabIndex = 35;
+            this.WaterPipeSizeComboBox.Text = "Select Size";
+            this.WaterPipeSizeComboBox.Visible = false;
+            this.WaterPipeSizeComboBox.SelectedIndexChanged += new System.EventHandler(this.WaterPipeSizeComboBox_SelectedIndexChanged);
+            // 
+            // WaterOverrideBtn
+            // 
+            this.WaterOverrideBtn.ForeColor = System.Drawing.Color.IndianRed;
+            this.WaterOverrideBtn.Location = new System.Drawing.Point(211, 202);
+            this.WaterOverrideBtn.Name = "WaterOverrideBtn";
+            this.WaterOverrideBtn.Size = new System.Drawing.Size(81, 29);
+            this.WaterOverrideBtn.TabIndex = 33;
+            this.WaterOverrideBtn.Text = "Override";
+            this.WaterOverrideBtn.UseVisualStyleBackColor = true;
+            this.WaterOverrideBtn.Click += new System.EventHandler(this.WaterOverrideBtn_Click);
+            // 
+            // PsiPerFootLabel
+            // 
+            this.PsiPerFootLabel.AutoSize = true;
+            this.PsiPerFootLabel.Location = new System.Drawing.Point(145, 141);
+            this.PsiPerFootLabel.Name = "PsiPerFootLabel";
+            this.PsiPerFootLabel.Size = new System.Drawing.Size(53, 13);
+            this.PsiPerFootLabel.TabIndex = 32;
+            this.PsiPerFootLabel.Text = "PSI/Foot:";
+            // 
+            // PsiPerFootComboBox
+            // 
+            this.PsiPerFootComboBox.FormattingEnabled = true;
+            this.PsiPerFootComboBox.Location = new System.Drawing.Point(157, 169);
+            this.PsiPerFootComboBox.Name = "PsiPerFootComboBox";
+            this.PsiPerFootComboBox.Size = new System.Drawing.Size(135, 21);
+            this.PsiPerFootComboBox.TabIndex = 31;
+            this.PsiPerFootComboBox.Text = "12.8";
+            this.PsiPerFootComboBox.SelectedIndexChanged += new System.EventHandler(this.PsiPerFootComboBox_SelectedIndexChanged);
+            // 
+            // WaterTotalSelectedLabel
+            // 
+            this.WaterTotalSelectedLabel.AutoSize = true;
+            this.WaterTotalSelectedLabel.Location = new System.Drawing.Point(332, 233);
+            this.WaterTotalSelectedLabel.Name = "WaterTotalSelectedLabel";
+            this.WaterTotalSelectedLabel.Size = new System.Drawing.Size(84, 13);
+            this.WaterTotalSelectedLabel.TabIndex = 30;
+            this.WaterTotalSelectedLabel.Text = "Total Selected: ";
+            // 
+            // WaterRestBtn
+            // 
+            this.WaterRestBtn.Location = new System.Drawing.Point(471, 286);
+            this.WaterRestBtn.Name = "WaterRestBtn";
+            this.WaterRestBtn.Size = new System.Drawing.Size(106, 28);
+            this.WaterRestBtn.TabIndex = 29;
+            this.WaterRestBtn.Text = "Reset";
+            this.WaterRestBtn.UseVisualStyleBackColor = true;
+            this.WaterRestBtn.Click += new System.EventHandler(this.WaterRestBtn_Click);
+            // 
+            // WaterSelectBtn
+            // 
+            this.WaterSelectBtn.Location = new System.Drawing.Point(310, 286);
+            this.WaterSelectBtn.Name = "WaterSelectBtn";
+            this.WaterSelectBtn.Size = new System.Drawing.Size(106, 28);
+            this.WaterSelectBtn.TabIndex = 28;
+            this.WaterSelectBtn.Text = "Select Text";
+            this.WaterSelectBtn.UseVisualStyleBackColor = true;
+            this.WaterSelectBtn.Click += new System.EventHandler(this.WaterSelectBtn_Click);
+            // 
+            // FlushSettingsLabel
+            // 
+            this.FlushSettingsLabel.AutoSize = true;
+            this.FlushSettingsLabel.Location = new System.Drawing.Point(21, 141);
+            this.FlushSettingsLabel.Name = "FlushSettingsLabel";
+            this.FlushSettingsLabel.Size = new System.Drawing.Size(78, 13);
+            this.FlushSettingsLabel.TabIndex = 27;
+            this.FlushSettingsLabel.Text = "Flush Setting:";
+            // 
+            // FlushSettingComboBox
+            // 
+            this.FlushSettingComboBox.FormattingEnabled = true;
+            this.FlushSettingComboBox.Location = new System.Drawing.Point(20, 169);
+            this.FlushSettingComboBox.Name = "FlushSettingComboBox";
+            this.FlushSettingComboBox.Size = new System.Drawing.Size(114, 21);
+            this.FlushSettingComboBox.TabIndex = 26;
+            this.FlushSettingComboBox.Text = "Flush Tank";
+            this.FlushSettingComboBox.SelectedIndexChanged += new System.EventHandler(this.FlushSettingComboBox_SelectedIndexChanged);
+            // 
+            // WaterSystemGroupBox
+            // 
+            this.WaterSystemGroupBox.Controls.Add(this.HotRadioBtn);
+            this.WaterSystemGroupBox.Controls.Add(this.ColdRadioBtn);
+            this.WaterSystemGroupBox.Location = new System.Drawing.Point(24, 75);
+            this.WaterSystemGroupBox.Name = "WaterSystemGroupBox";
+            this.WaterSystemGroupBox.Size = new System.Drawing.Size(268, 53);
+            this.WaterSystemGroupBox.TabIndex = 25;
+            this.WaterSystemGroupBox.TabStop = false;
+            this.WaterSystemGroupBox.Text = "System";
+            // 
+            // HotRadioBtn
+            // 
+            this.HotRadioBtn.AutoSize = true;
+            this.HotRadioBtn.Location = new System.Drawing.Point(155, 21);
+            this.HotRadioBtn.Name = "HotRadioBtn";
+            this.HotRadioBtn.Size = new System.Drawing.Size(44, 17);
+            this.HotRadioBtn.TabIndex = 2;
+            this.HotRadioBtn.TabStop = true;
+            this.HotRadioBtn.Text = "Hot";
+            this.HotRadioBtn.UseVisualStyleBackColor = true;
+            this.HotRadioBtn.CheckedChanged += new System.EventHandler(this.HotRadioBtn_CheckedChanged);
+            // 
+            // ColdRadioBtn
+            // 
+            this.ColdRadioBtn.AutoSize = true;
+            this.ColdRadioBtn.Checked = true;
+            this.ColdRadioBtn.Location = new System.Drawing.Point(47, 21);
+            this.ColdRadioBtn.Name = "ColdRadioBtn";
+            this.ColdRadioBtn.Size = new System.Drawing.Size(49, 17);
+            this.ColdRadioBtn.TabIndex = 0;
+            this.ColdRadioBtn.TabStop = true;
+            this.ColdRadioBtn.Text = "Cold";
+            this.ColdRadioBtn.UseVisualStyleBackColor = true;
+            this.ColdRadioBtn.CheckedChanged += new System.EventHandler(this.ColdRadioBtn_CheckedChanged);
+            // 
+            // WaterDataGrid
+            // 
+            this.WaterDataGrid.AllowUserToAddRows = false;
+            this.WaterDataGrid.AllowUserToDeleteRows = false;
+            this.WaterDataGrid.AllowUserToResizeColumns = false;
+            this.WaterDataGrid.AllowUserToResizeRows = false;
+            this.WaterDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.WaterDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.WaterDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn9,
+            this.dataGridViewTextBoxColumn10,
+            this.dataGridViewTextBoxColumn11,
+            this.dataGridViewTextBoxColumn12});
+            this.WaterDataGrid.GridColor = System.Drawing.SystemColors.Control;
+            this.WaterDataGrid.Location = new System.Drawing.Point(338, 37);
+            this.WaterDataGrid.Name = "WaterDataGrid";
+            this.WaterDataGrid.ReadOnly = true;
+            this.WaterDataGrid.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.WaterDataGrid.Size = new System.Drawing.Size(239, 166);
+            this.WaterDataGrid.TabIndex = 24;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.DataPropertyName = "Id";
+            this.dataGridViewTextBoxColumn9.Frozen = true;
+            this.dataGridViewTextBoxColumn9.HeaderText = "Id";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.dataGridViewTextBoxColumn9.Visible = false;
+            this.dataGridViewTextBoxColumn9.Width = 42;
+            // 
+            // dataGridViewTextBoxColumn10
+            // 
+            this.dataGridViewTextBoxColumn10.DataPropertyName = "Count";
+            this.dataGridViewTextBoxColumn10.Frozen = true;
+            this.dataGridViewTextBoxColumn10.HeaderText = "Count";
+            this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+            this.dataGridViewTextBoxColumn10.ReadOnly = true;
+            this.dataGridViewTextBoxColumn10.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn10.Width = 64;
+            // 
+            // dataGridViewTextBoxColumn11
+            // 
+            this.dataGridViewTextBoxColumn11.DataPropertyName = "PipeSize";
+            this.dataGridViewTextBoxColumn11.Frozen = true;
+            this.dataGridViewTextBoxColumn11.HeaderText = "PipeSize";
+            this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+            this.dataGridViewTextBoxColumn11.ReadOnly = true;
+            this.dataGridViewTextBoxColumn11.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn11.Width = 74;
+            // 
+            // dataGridViewTextBoxColumn12
+            // 
+            this.dataGridViewTextBoxColumn12.DataPropertyName = "Units";
+            this.dataGridViewTextBoxColumn12.HeaderText = "Units";
+            this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+            this.dataGridViewTextBoxColumn12.ReadOnly = true;
+            this.dataGridViewTextBoxColumn12.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn12.Width = 59;
+            // 
+            // WaterMeterialGroupBox
+            // 
+            this.WaterMeterialGroupBox.Controls.Add(this.PexRadioBtn);
+            this.WaterMeterialGroupBox.Controls.Add(this.CpvcRadioBtn);
+            this.WaterMeterialGroupBox.Controls.Add(this.CopperRadioBtn);
+            this.WaterMeterialGroupBox.Location = new System.Drawing.Point(24, 16);
+            this.WaterMeterialGroupBox.Name = "WaterMeterialGroupBox";
+            this.WaterMeterialGroupBox.Size = new System.Drawing.Size(268, 53);
+            this.WaterMeterialGroupBox.TabIndex = 23;
+            this.WaterMeterialGroupBox.TabStop = false;
+            this.WaterMeterialGroupBox.Text = "Material";
+            // 
+            // PexRadioBtn
+            // 
+            this.PexRadioBtn.AutoSize = true;
+            this.PexRadioBtn.Location = new System.Drawing.Point(187, 21);
+            this.PexRadioBtn.Name = "PexRadioBtn";
+            this.PexRadioBtn.Size = new System.Drawing.Size(43, 17);
+            this.PexRadioBtn.TabIndex = 2;
+            this.PexRadioBtn.TabStop = true;
+            this.PexRadioBtn.Text = "PEX";
+            this.PexRadioBtn.UseVisualStyleBackColor = true;
+            this.PexRadioBtn.CheckedChanged += new System.EventHandler(this.PexRadioBtn_CheckedChanged);
+            // 
+            // CpvcRadioBtn
+            // 
+            this.CpvcRadioBtn.AutoSize = true;
+            this.CpvcRadioBtn.Location = new System.Drawing.Point(107, 22);
+            this.CpvcRadioBtn.Name = "CpvcRadioBtn";
+            this.CpvcRadioBtn.Size = new System.Drawing.Size(52, 17);
+            this.CpvcRadioBtn.TabIndex = 1;
+            this.CpvcRadioBtn.TabStop = true;
+            this.CpvcRadioBtn.Text = "CPVC";
+            this.CpvcRadioBtn.UseVisualStyleBackColor = true;
+            this.CpvcRadioBtn.CheckedChanged += new System.EventHandler(this.CpvcRadioBtn_CheckedChanged);
+            // 
+            // CopperRadioBtn
+            // 
+            this.CopperRadioBtn.AutoSize = true;
+            this.CopperRadioBtn.Checked = true;
+            this.CopperRadioBtn.Location = new System.Drawing.Point(26, 22);
+            this.CopperRadioBtn.Name = "CopperRadioBtn";
+            this.CopperRadioBtn.Size = new System.Drawing.Size(63, 17);
+            this.CopperRadioBtn.TabIndex = 0;
+            this.CopperRadioBtn.TabStop = true;
+            this.CopperRadioBtn.Text = "Copper";
+            this.CopperRadioBtn.UseVisualStyleBackColor = true;
+            this.CopperRadioBtn.CheckedChanged += new System.EventHandler(this.CopperRadioBtn_CheckedChanged);
+            // 
             // GasTab
             // 
+            this.GasTab.Controls.Add(this.WaterLenthLabel);
+            this.GasTab.Controls.Add(this.GasLeaderLocationBox);
+            this.GasTab.Controls.Add(this.GasTotalLengthLabel);
+            this.GasTab.Controls.Add(this.GasReset);
+            this.GasTab.Controls.Add(this.GasSelectBtn);
+            this.GasTab.Controls.Add(this.GasApplyBtn);
+            this.GasTab.Controls.Add(this.GasPipeSizelabel);
+            this.GasTab.Controls.Add(this.GasDataGrid);
             this.GasTab.Controls.Add(this.GasLengthComboBox);
             this.GasTab.Controls.Add(this.PressureBox);
             this.GasTab.Location = new System.Drawing.Point(4, 22);
@@ -363,20 +727,175 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.GasTab.Text = "Gas";
             this.GasTab.UseVisualStyleBackColor = true;
             // 
+            // WaterLenthLabel
+            // 
+            this.WaterLenthLabel.AutoSize = true;
+            this.WaterLenthLabel.Location = new System.Drawing.Point(29, 110);
+            this.WaterLenthLabel.Name = "WaterLenthLabel";
+            this.WaterLenthLabel.Size = new System.Drawing.Size(49, 13);
+            this.WaterLenthLabel.TabIndex = 29;
+            this.WaterLenthLabel.Text = "Length: ";
+            // 
+            // GasLeaderLocationBox
+            // 
+            this.GasLeaderLocationBox.Controls.Add(this.GasRightLeaderLocation);
+            this.GasLeaderLocationBox.Controls.Add(this.GasLeftLeaderLocation);
+            this.GasLeaderLocationBox.Location = new System.Drawing.Point(32, 222);
+            this.GasLeaderLocationBox.Name = "GasLeaderLocationBox";
+            this.GasLeaderLocationBox.Size = new System.Drawing.Size(200, 53);
+            this.GasLeaderLocationBox.TabIndex = 28;
+            this.GasLeaderLocationBox.TabStop = false;
+            this.GasLeaderLocationBox.Text = "Leader Location";
+            // 
+            // GasRightLeaderLocation
+            // 
+            this.GasRightLeaderLocation.AutoSize = true;
+            this.GasRightLeaderLocation.Location = new System.Drawing.Point(112, 22);
+            this.GasRightLeaderLocation.Name = "GasRightLeaderLocation";
+            this.GasRightLeaderLocation.Size = new System.Drawing.Size(53, 17);
+            this.GasRightLeaderLocation.TabIndex = 1;
+            this.GasRightLeaderLocation.TabStop = true;
+            this.GasRightLeaderLocation.Text = "Right";
+            this.GasRightLeaderLocation.UseVisualStyleBackColor = true;
+            this.GasRightLeaderLocation.CheckedChanged += new System.EventHandler(this.GasRightLeaderLocation_CheckedChanged);
+            // 
+            // GasLeftLeaderLocation
+            // 
+            this.GasLeftLeaderLocation.AutoSize = true;
+            this.GasLeftLeaderLocation.Location = new System.Drawing.Point(28, 22);
+            this.GasLeftLeaderLocation.Name = "GasLeftLeaderLocation";
+            this.GasLeftLeaderLocation.Size = new System.Drawing.Size(44, 17);
+            this.GasLeftLeaderLocation.TabIndex = 0;
+            this.GasLeftLeaderLocation.TabStop = true;
+            this.GasLeftLeaderLocation.Text = "Left";
+            this.GasLeftLeaderLocation.UseVisualStyleBackColor = true;
+            this.GasLeftLeaderLocation.CheckedChanged += new System.EventHandler(this.GasLeftLeaderLocation_CheckedChanged);
+            // 
+            // GasTotalLengthLabel
+            // 
+            this.GasTotalLengthLabel.AutoSize = true;
+            this.GasTotalLengthLabel.Location = new System.Drawing.Point(308, 262);
+            this.GasTotalLengthLabel.Name = "GasTotalLengthLabel";
+            this.GasTotalLengthLabel.Size = new System.Drawing.Size(77, 13);
+            this.GasTotalLengthLabel.TabIndex = 27;
+            this.GasTotalLengthLabel.Text = "Total Length: ";
+            // 
+            // GasReset
+            // 
+            this.GasReset.Location = new System.Drawing.Point(467, 313);
+            this.GasReset.Name = "GasReset";
+            this.GasReset.Size = new System.Drawing.Size(106, 28);
+            this.GasReset.TabIndex = 26;
+            this.GasReset.Text = "Reset";
+            this.GasReset.UseVisualStyleBackColor = true;
+            this.GasReset.Click += new System.EventHandler(this.GasReset_Click);
+            // 
+            // GasSelectBtn
+            // 
+            this.GasSelectBtn.Location = new System.Drawing.Point(306, 313);
+            this.GasSelectBtn.Name = "GasSelectBtn";
+            this.GasSelectBtn.Size = new System.Drawing.Size(106, 28);
+            this.GasSelectBtn.TabIndex = 25;
+            this.GasSelectBtn.Text = "Select Text";
+            this.GasSelectBtn.UseVisualStyleBackColor = true;
+            this.GasSelectBtn.Click += new System.EventHandler(this.GasSelectBtn_Click);
+            // 
+            // GasApplyBtn
+            // 
+            this.GasApplyBtn.BackColor = System.Drawing.Color.Transparent;
+            this.GasApplyBtn.ForeColor = System.Drawing.Color.IndianRed;
+            this.GasApplyBtn.Location = new System.Drawing.Point(82, 309);
+            this.GasApplyBtn.Name = "GasApplyBtn";
+            this.GasApplyBtn.Size = new System.Drawing.Size(113, 37);
+            this.GasApplyBtn.TabIndex = 24;
+            this.GasApplyBtn.Text = "Apply Update";
+            this.GasApplyBtn.UseVisualStyleBackColor = false;
+            this.GasApplyBtn.Click += new System.EventHandler(this.GasApplyBtn_Click);
+            // 
+            // GasPipeSizelabel
+            // 
+            this.GasPipeSizelabel.AutoSize = true;
+            this.GasPipeSizelabel.Location = new System.Drawing.Point(29, 189);
+            this.GasPipeSizelabel.Name = "GasPipeSizelabel";
+            this.GasPipeSizelabel.Size = new System.Drawing.Size(55, 13);
+            this.GasPipeSizelabel.TabIndex = 22;
+            this.GasPipeSizelabel.Text = "PipeSize: ";
+            // 
+            // GasDataGrid
+            // 
+            this.GasDataGrid.AllowUserToAddRows = false;
+            this.GasDataGrid.AllowUserToDeleteRows = false;
+            this.GasDataGrid.AllowUserToResizeColumns = false;
+            this.GasDataGrid.AllowUserToResizeRows = false;
+            this.GasDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.GasDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.GasDataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6,
+            this.dataGridViewTextBoxColumn7,
+            this.dataGridViewTextBoxColumn8});
+            this.GasDataGrid.GridColor = System.Drawing.SystemColors.Control;
+            this.GasDataGrid.Location = new System.Drawing.Point(323, 36);
+            this.GasDataGrid.Name = "GasDataGrid";
+            this.GasDataGrid.ReadOnly = true;
+            this.GasDataGrid.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.GasDataGrid.Size = new System.Drawing.Size(235, 166);
+            this.GasDataGrid.TabIndex = 19;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "Id";
+            this.dataGridViewTextBoxColumn5.Frozen = true;
+            this.dataGridViewTextBoxColumn5.HeaderText = "Id";
+            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
+            this.dataGridViewTextBoxColumn5.Visible = false;
+            this.dataGridViewTextBoxColumn5.Width = 42;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "Count";
+            this.dataGridViewTextBoxColumn6.Frozen = true;
+            this.dataGridViewTextBoxColumn6.HeaderText = "Count";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            this.dataGridViewTextBoxColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn6.Width = 64;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.DataPropertyName = "PipeSize";
+            this.dataGridViewTextBoxColumn7.Frozen = true;
+            this.dataGridViewTextBoxColumn7.HeaderText = "PipeSize";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            this.dataGridViewTextBoxColumn7.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn7.Width = 74;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.DataPropertyName = "Length";
+            this.dataGridViewTextBoxColumn8.HeaderText = "Length";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            this.dataGridViewTextBoxColumn8.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewTextBoxColumn8.Width = 68;
+            // 
             // GasLengthComboBox
             // 
             this.GasLengthComboBox.FormattingEnabled = true;
-            this.GasLengthComboBox.Location = new System.Drawing.Point(30, 118);
+            this.GasLengthComboBox.Location = new System.Drawing.Point(32, 135);
             this.GasLengthComboBox.Name = "GasLengthComboBox";
             this.GasLengthComboBox.Size = new System.Drawing.Size(200, 21);
             this.GasLengthComboBox.TabIndex = 3;
             this.GasLengthComboBox.Text = "Select Length";
+            this.GasLengthComboBox.SelectedIndexChanged += new System.EventHandler(this.GasLengthComboBox_SelectedIndexChanged);
             // 
             // PressureBox
             // 
             this.PressureBox.Controls.Add(this.RadioBtnPressureMed);
-            this.PressureBox.Controls.Add(this.RadioBtnPressureLow);
-            this.PressureBox.Location = new System.Drawing.Point(30, 36);
+            this.PressureBox.Controls.Add(this.LowPressureGasRadioBtn);
+            this.PressureBox.Location = new System.Drawing.Point(32, 36);
             this.PressureBox.Name = "PressureBox";
             this.PressureBox.Size = new System.Drawing.Size(200, 53);
             this.PressureBox.TabIndex = 2;
@@ -390,34 +909,34 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.RadioBtnPressureMed.Name = "RadioBtnPressureMed";
             this.RadioBtnPressureMed.Size = new System.Drawing.Size(48, 17);
             this.RadioBtnPressureMed.TabIndex = 1;
-            this.RadioBtnPressureMed.TabStop = true;
             this.RadioBtnPressureMed.Text = "Med";
             this.RadioBtnPressureMed.UseVisualStyleBackColor = true;
+            this.RadioBtnPressureMed.CheckedChanged += new System.EventHandler(this.RadioBtnPressureMed_CheckedChanged);
             // 
-            // RadioBtnPressureLow
+            // LowPressureGasRadioBtn
             // 
-            this.RadioBtnPressureLow.AutoSize = true;
-            this.RadioBtnPressureLow.Location = new System.Drawing.Point(28, 22);
-            this.RadioBtnPressureLow.Name = "RadioBtnPressureLow";
-            this.RadioBtnPressureLow.Size = new System.Drawing.Size(46, 17);
-            this.RadioBtnPressureLow.TabIndex = 0;
-            this.RadioBtnPressureLow.TabStop = true;
-            this.RadioBtnPressureLow.Text = "Low";
-            this.RadioBtnPressureLow.UseVisualStyleBackColor = true;
+            this.LowPressureGasRadioBtn.AutoSize = true;
+            this.LowPressureGasRadioBtn.Location = new System.Drawing.Point(28, 22);
+            this.LowPressureGasRadioBtn.Name = "LowPressureGasRadioBtn";
+            this.LowPressureGasRadioBtn.Size = new System.Drawing.Size(46, 17);
+            this.LowPressureGasRadioBtn.TabIndex = 0;
+            this.LowPressureGasRadioBtn.Text = "Low";
+            this.LowPressureGasRadioBtn.UseVisualStyleBackColor = true;
+            this.LowPressureGasRadioBtn.CheckedChanged += new System.EventHandler(this.LowPressureGasRadioBtn_CheckedChanged);
             // 
             // StormDrainTab
             // 
+            this.StormDrainTab.Controls.Add(this.StormDrainMaxLabel);
             this.StormDrainTab.Controls.Add(this.groupBox1);
+            this.StormDrainTab.Controls.Add(this.GroupBoxStormDrain);
             this.StormDrainTab.Controls.Add(this.StormDrainTotalSelectedLabel);
             this.StormDrainTab.Controls.Add(this.StormDrainResetBtn);
             this.StormDrainTab.Controls.Add(this.StormDrainSelectBtn);
             this.StormDrainTab.Controls.Add(this.StormDrainGridView);
-            this.StormDrainTab.Controls.Add(this.button1);
+            this.StormDrainTab.Controls.Add(this.StormDrainApplyBtn);
             this.StormDrainTab.Controls.Add(this.StormDrainOverrideBtn);
             this.StormDrainTab.Controls.Add(this.StormDrainSizeComboBox);
             this.StormDrainTab.Controls.Add(this.StormDrainPipeSizeLabel);
-            this.StormDrainTab.Controls.Add(this.AreaSelectedTextBox);
-            this.StormDrainTab.Controls.Add(this.SelectedAreaLabel);
             this.StormDrainTab.Location = new System.Drawing.Point(4, 22);
             this.StormDrainTab.Name = "StormDrainTab";
             this.StormDrainTab.Padding = new System.Windows.Forms.Padding(3);
@@ -426,21 +945,66 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.StormDrainTab.Text = "Storm Drain";
             this.StormDrainTab.UseVisualStyleBackColor = true;
             // 
+            // StormDrainMaxLabel
+            // 
+            this.StormDrainMaxLabel.AutoSize = true;
+            this.StormDrainMaxLabel.Location = new System.Drawing.Point(32, 199);
+            this.StormDrainMaxLabel.Name = "StormDrainMaxLabel";
+            this.StormDrainMaxLabel.Size = new System.Drawing.Size(59, 13);
+            this.StormDrainMaxLabel.TabIndex = 24;
+            this.StormDrainMaxLabel.Text = "Max Unit: ";
+            // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.StormDrainRadioBtn3Hr);
-            this.groupBox1.Controls.Add(this.StormDrainRadioBtn2Hr);
-            this.groupBox1.Controls.Add(this.StormDrainRadioBtn1Hr);
-            this.groupBox1.Location = new System.Drawing.Point(35, 37);
+            this.groupBox1.Controls.Add(this.RightLeaderRadioBtn);
+            this.groupBox1.Controls.Add(this.LeftLeaderRadioBtn);
+            this.groupBox1.Location = new System.Drawing.Point(35, 232);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(259, 53);
-            this.groupBox1.TabIndex = 22;
+            this.groupBox1.Size = new System.Drawing.Size(200, 53);
+            this.groupBox1.TabIndex = 23;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Leader Location";
+            // 
+            // RightLeaderRadioBtn
+            // 
+            this.RightLeaderRadioBtn.AutoSize = true;
+            this.RightLeaderRadioBtn.Location = new System.Drawing.Point(112, 22);
+            this.RightLeaderRadioBtn.Name = "RightLeaderRadioBtn";
+            this.RightLeaderRadioBtn.Size = new System.Drawing.Size(53, 17);
+            this.RightLeaderRadioBtn.TabIndex = 1;
+            this.RightLeaderRadioBtn.TabStop = true;
+            this.RightLeaderRadioBtn.Text = "Right";
+            this.RightLeaderRadioBtn.UseVisualStyleBackColor = true;
+            this.RightLeaderRadioBtn.CheckedChanged += new System.EventHandler(this.RightLeaderRadioBtn_CheckedChanged);
+            // 
+            // LeftLeaderRadioBtn
+            // 
+            this.LeftLeaderRadioBtn.AutoSize = true;
+            this.LeftLeaderRadioBtn.Location = new System.Drawing.Point(28, 22);
+            this.LeftLeaderRadioBtn.Name = "LeftLeaderRadioBtn";
+            this.LeftLeaderRadioBtn.Size = new System.Drawing.Size(44, 17);
+            this.LeftLeaderRadioBtn.TabIndex = 0;
+            this.LeftLeaderRadioBtn.TabStop = true;
+            this.LeftLeaderRadioBtn.Text = "Left";
+            this.LeftLeaderRadioBtn.UseVisualStyleBackColor = true;
+            this.LeftLeaderRadioBtn.CheckedChanged += new System.EventHandler(this.LeftLeaderRadioBtn_CheckedChanged);
+            // 
+            // GroupBoxStormDrain
+            // 
+            this.GroupBoxStormDrain.Controls.Add(this.StormDrainRadioBtn3Hr);
+            this.GroupBoxStormDrain.Controls.Add(this.StormDrainRadioBtn2Hr);
+            this.GroupBoxStormDrain.Controls.Add(this.StormDrainRadioBtn1Hr);
+            this.GroupBoxStormDrain.Location = new System.Drawing.Point(35, 37);
+            this.GroupBoxStormDrain.Name = "GroupBoxStormDrain";
+            this.GroupBoxStormDrain.Size = new System.Drawing.Size(259, 53);
+            this.GroupBoxStormDrain.TabIndex = 22;
+            this.GroupBoxStormDrain.TabStop = false;
+            this.GroupBoxStormDrain.Text = "Rate";
             // 
             // StormDrainRadioBtn3Hr
             // 
             this.StormDrainRadioBtn3Hr.AutoSize = true;
+            this.StormDrainRadioBtn3Hr.Checked = true;
             this.StormDrainRadioBtn3Hr.Location = new System.Drawing.Point(187, 21);
             this.StormDrainRadioBtn3Hr.Name = "StormDrainRadioBtn3Hr";
             this.StormDrainRadioBtn3Hr.Size = new System.Drawing.Size(51, 17);
@@ -448,6 +1012,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.StormDrainRadioBtn3Hr.TabStop = true;
             this.StormDrainRadioBtn3Hr.Text = "3\"/Hr";
             this.StormDrainRadioBtn3Hr.UseVisualStyleBackColor = true;
+            this.StormDrainRadioBtn3Hr.CheckedChanged += new System.EventHandler(this.StormDrainRadioBtn3Hr_CheckedChanged);
             // 
             // StormDrainRadioBtn2Hr
             // 
@@ -459,6 +1024,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.StormDrainRadioBtn2Hr.TabStop = true;
             this.StormDrainRadioBtn2Hr.Text = "2\"/Hr";
             this.StormDrainRadioBtn2Hr.UseVisualStyleBackColor = true;
+            this.StormDrainRadioBtn2Hr.CheckedChanged += new System.EventHandler(this.StormDrainRadioBtn2Hr_CheckedChanged);
             // 
             // StormDrainRadioBtn1Hr
             // 
@@ -470,11 +1036,12 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.StormDrainRadioBtn1Hr.TabStop = true;
             this.StormDrainRadioBtn1Hr.Text = "1\"/Hr";
             this.StormDrainRadioBtn1Hr.UseVisualStyleBackColor = true;
+            this.StormDrainRadioBtn1Hr.CheckedChanged += new System.EventHandler(this.StormDrainRadioBtn1Hr_CheckedChanged);
             // 
             // StormDrainTotalSelectedLabel
             // 
             this.StormDrainTotalSelectedLabel.AutoSize = true;
-            this.StormDrainTotalSelectedLabel.Location = new System.Drawing.Point(308, 239);
+            this.StormDrainTotalSelectedLabel.Location = new System.Drawing.Point(308, 255);
             this.StormDrainTotalSelectedLabel.Name = "StormDrainTotalSelectedLabel";
             this.StormDrainTotalSelectedLabel.Size = new System.Drawing.Size(64, 13);
             this.StormDrainTotalSelectedLabel.TabIndex = 21;
@@ -482,16 +1049,17 @@ namespace K2dPlugin.Features.PipeSum.Form
             // 
             // StormDrainResetBtn
             // 
-            this.StormDrainResetBtn.Location = new System.Drawing.Point(467, 290);
+            this.StormDrainResetBtn.Location = new System.Drawing.Point(467, 306);
             this.StormDrainResetBtn.Name = "StormDrainResetBtn";
             this.StormDrainResetBtn.Size = new System.Drawing.Size(106, 28);
             this.StormDrainResetBtn.TabIndex = 20;
             this.StormDrainResetBtn.Text = "Reset";
             this.StormDrainResetBtn.UseVisualStyleBackColor = true;
+            this.StormDrainResetBtn.Click += new System.EventHandler(this.StormDrainResetBtn_Click);
             // 
             // StormDrainSelectBtn
             // 
-            this.StormDrainSelectBtn.Location = new System.Drawing.Point(306, 290);
+            this.StormDrainSelectBtn.Location = new System.Drawing.Point(306, 306);
             this.StormDrainSelectBtn.Name = "StormDrainSelectBtn";
             this.StormDrainSelectBtn.Size = new System.Drawing.Size(106, 28);
             this.StormDrainSelectBtn.TabIndex = 19;
@@ -559,59 +1127,49 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.dataGridViewTextBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn4.Width = 55;
             // 
-            // button1
+            // StormDrainApplyBtn
             // 
-            this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.ForeColor = System.Drawing.Color.IndianRed;
-            this.button1.Location = new System.Drawing.Point(80, 286);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(113, 37);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "Apply Update";
-            this.button1.UseVisualStyleBackColor = false;
+            this.StormDrainApplyBtn.BackColor = System.Drawing.Color.Transparent;
+            this.StormDrainApplyBtn.ForeColor = System.Drawing.Color.IndianRed;
+            this.StormDrainApplyBtn.Location = new System.Drawing.Point(80, 302);
+            this.StormDrainApplyBtn.Name = "StormDrainApplyBtn";
+            this.StormDrainApplyBtn.Size = new System.Drawing.Size(113, 37);
+            this.StormDrainApplyBtn.TabIndex = 17;
+            this.StormDrainApplyBtn.Text = "Apply Update";
+            this.StormDrainApplyBtn.UseVisualStyleBackColor = false;
+            this.StormDrainApplyBtn.Click += new System.EventHandler(this.StormDrainApplyBtn_Click);
             // 
             // StormDrainOverrideBtn
             // 
             this.StormDrainOverrideBtn.ForeColor = System.Drawing.Color.IndianRed;
-            this.StormDrainOverrideBtn.Location = new System.Drawing.Point(193, 179);
+            this.StormDrainOverrideBtn.Location = new System.Drawing.Point(35, 151);
             this.StormDrainOverrideBtn.Name = "StormDrainOverrideBtn";
             this.StormDrainOverrideBtn.Size = new System.Drawing.Size(101, 29);
             this.StormDrainOverrideBtn.TabIndex = 7;
             this.StormDrainOverrideBtn.Text = "Override";
             this.StormDrainOverrideBtn.UseVisualStyleBackColor = true;
+            this.StormDrainOverrideBtn.Click += new System.EventHandler(this.StormDrainOverrideBtn_Click);
             // 
             // StormDrainSizeComboBox
             // 
+            this.StormDrainSizeComboBox.Enabled = false;
             this.StormDrainSizeComboBox.FormattingEnabled = true;
-            this.StormDrainSizeComboBox.Location = new System.Drawing.Point(35, 184);
+            this.StormDrainSizeComboBox.Location = new System.Drawing.Point(135, 115);
             this.StormDrainSizeComboBox.Name = "StormDrainSizeComboBox";
             this.StormDrainSizeComboBox.Size = new System.Drawing.Size(113, 21);
             this.StormDrainSizeComboBox.TabIndex = 3;
+            this.StormDrainSizeComboBox.Text = "Select Override Size";
+            this.StormDrainSizeComboBox.Visible = false;
+            this.StormDrainSizeComboBox.SelectedIndexChanged += new System.EventHandler(this.StormDrainSizeComboBox_SelectedIndexChanged);
             // 
             // StormDrainPipeSizeLabel
             // 
             this.StormDrainPipeSizeLabel.AutoSize = true;
-            this.StormDrainPipeSizeLabel.Location = new System.Drawing.Point(32, 159);
+            this.StormDrainPipeSizeLabel.Location = new System.Drawing.Point(32, 115);
             this.StormDrainPipeSizeLabel.Name = "StormDrainPipeSizeLabel";
-            this.StormDrainPipeSizeLabel.Size = new System.Drawing.Size(52, 13);
+            this.StormDrainPipeSizeLabel.Size = new System.Drawing.Size(58, 13);
             this.StormDrainPipeSizeLabel.TabIndex = 2;
-            this.StormDrainPipeSizeLabel.Text = "Pipe Size";
-            // 
-            // AreaSelectedTextBox
-            // 
-            this.AreaSelectedTextBox.Location = new System.Drawing.Point(128, 120);
-            this.AreaSelectedTextBox.Name = "AreaSelectedTextBox";
-            this.AreaSelectedTextBox.Size = new System.Drawing.Size(128, 22);
-            this.AreaSelectedTextBox.TabIndex = 1;
-            // 
-            // SelectedAreaLabel
-            // 
-            this.SelectedAreaLabel.AutoSize = true;
-            this.SelectedAreaLabel.Location = new System.Drawing.Point(32, 123);
-            this.SelectedAreaLabel.Name = "SelectedAreaLabel";
-            this.SelectedAreaLabel.Size = new System.Drawing.Size(76, 13);
-            this.SelectedAreaLabel.TabIndex = 0;
-            this.SelectedAreaLabel.Text = "Area Selected";
+            this.StormDrainPipeSizeLabel.Text = "Pipe Size: ";
             // 
             // PipeSumCloseBtn
             // 
@@ -645,18 +1203,33 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.Text = "PipeSumForm";
             this.Load += new System.EventHandler(this.PipeSumForm_Load);
             this.PipeSumTab.ResumeLayout(false);
-            this.SanitaitonTab.ResumeLayout(false);
-            this.SanitaitonTab.PerformLayout();
+            this.SanitaryTab.ResumeLayout(false);
+            this.SanitaryTab.PerformLayout();
             this.SanitationHeadLocation.ResumeLayout(false);
             this.SanitationHeadLocation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SanitationGridView)).EndInit();
+            this.WaterTab.ResumeLayout(false);
+            this.WaterTab.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.WaterSystemGroupBox.ResumeLayout(false);
+            this.WaterSystemGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.WaterDataGrid)).EndInit();
+            this.WaterMeterialGroupBox.ResumeLayout(false);
+            this.WaterMeterialGroupBox.PerformLayout();
             this.GasTab.ResumeLayout(false);
+            this.GasTab.PerformLayout();
+            this.GasLeaderLocationBox.ResumeLayout(false);
+            this.GasLeaderLocationBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.GasDataGrid)).EndInit();
             this.PressureBox.ResumeLayout(false);
             this.PressureBox.PerformLayout();
             this.StormDrainTab.ResumeLayout(false);
             this.StormDrainTab.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.GroupBoxStormDrain.ResumeLayout(false);
+            this.GroupBoxStormDrain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StormDrainGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
@@ -666,7 +1239,7 @@ namespace K2dPlugin.Features.PipeSum.Form
         #endregion
 
         private System.Windows.Forms.TabControl PipeSumTab;
-        private System.Windows.Forms.TabPage SanitaitonTab;
+        private System.Windows.Forms.TabPage SanitaryTab;
         private System.Windows.Forms.TabPage WaterTab;
         private System.Windows.Forms.TabPage GasTab;
         private System.Windows.Forms.TabPage StormDrainTab;
@@ -674,7 +1247,7 @@ namespace K2dPlugin.Features.PipeSum.Form
         private System.Windows.Forms.Button PipeSumCloseBtn;
         private System.Windows.Forms.GroupBox PressureBox;
         private System.Windows.Forms.RadioButton RadioBtnPressureMed;
-        private System.Windows.Forms.RadioButton RadioBtnPressureLow;
+        private System.Windows.Forms.RadioButton LowPressureGasRadioBtn;
         private System.Windows.Forms.ComboBox GasLengthComboBox;
         private System.Windows.Forms.ComboBox SanitationComboBox;
         private System.Windows.Forms.Label SanitaionPipeSystemLabel;
@@ -690,11 +1263,7 @@ namespace K2dPlugin.Features.PipeSum.Form
         private System.Windows.Forms.Label PipeSizeLabel;
         private System.Windows.Forms.ComboBox PipeSizeComboBox;
         private System.Windows.Forms.Button ApplyBtn;
-        private System.Windows.Forms.Label SelectedAreaLabel;
-        private System.Windows.Forms.TextBox AreaSelectedTextBox;
         private System.Windows.Forms.Label StormDrainPipeSizeLabel;
-        private System.Windows.Forms.ComboBox StormDrainSizeComboBox;
-        private System.Windows.Forms.Label StormDrainTotalSelectedLabel;
         private System.Windows.Forms.Button StormDrainResetBtn;
         private System.Windows.Forms.Button StormDrainSelectBtn;
         private System.Windows.Forms.DataGridView StormDrainGridView;
@@ -702,7 +1271,7 @@ namespace K2dPlugin.Features.PipeSum.Form
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button StormDrainApplyBtn;
         private System.Windows.Forms.Button StormDrainOverrideBtn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.DataGridViewTextBoxColumn Count;
@@ -711,9 +1280,55 @@ namespace K2dPlugin.Features.PipeSum.Form
         private GroupBox SanitationHeadLocation;
         private RadioButton RIghtArrowLocation;
         private RadioButton LeftArrowLocation;
-        private GroupBox groupBox1;
+        private GroupBox GroupBoxStormDrain;
         private RadioButton StormDrainRadioBtn2Hr;
         private RadioButton StormDrainRadioBtn1Hr;
         private RadioButton StormDrainRadioBtn3Hr;
+        private GroupBox groupBox1;
+        private RadioButton RightLeaderRadioBtn;
+        private RadioButton LeftLeaderRadioBtn;
+        private Label StormDrainMaxLabel;
+        private DataGridView GasDataGrid;
+        private Label GasPipeSizelabel;
+        private GroupBox GasLeaderLocationBox;
+        private RadioButton GasRightLeaderLocation;
+        private RadioButton GasLeftLeaderLocation;
+        private Label GasTotalLengthLabel;
+        private Button GasReset;
+        private Button GasSelectBtn;
+        private Button GasApplyBtn;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private Label StormDrainTotalSelectedLabel;
+        private ComboBox StormDrainSizeComboBox;
+        private GroupBox WaterMeterialGroupBox;
+        private RadioButton PexRadioBtn;
+        private RadioButton CpvcRadioBtn;
+        private RadioButton CopperRadioBtn;
+        private GroupBox WaterSystemGroupBox;
+        private RadioButton HotRadioBtn;
+        private RadioButton ColdRadioBtn;
+        private DataGridView WaterDataGrid;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+        private Label FlushSettingsLabel;
+        private ComboBox FlushSettingComboBox;
+        private Button WaterApplyBtn;
+        private Label WaterPipeSizeLabel;
+        private ComboBox WaterPipeSizeComboBox;
+        private Button WaterOverrideBtn;
+        private Label PsiPerFootLabel;
+        private ComboBox PsiPerFootComboBox;
+        private Label WaterTotalSelectedLabel;
+        private Button WaterRestBtn;
+        private Button WaterSelectBtn;
+        private Label WaterLenthLabel;
+        private GroupBox groupBox2;
+        private RadioButton radioButton1;
+        private RadioButton radioButton2;
     }
 }

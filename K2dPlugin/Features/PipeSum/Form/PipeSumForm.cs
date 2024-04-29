@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -12,8 +14,10 @@ using K2dPlugin.Features.PipeSum.Dto;
 using K2dPlugin.Features.PipeSum.Enum;
 using static System.Net.Mime.MediaTypeNames;
 using Autodesk.Revit.DB.Visual;
+using ComboBox = System.Windows.Forms.ComboBox;
 using Control = System.Windows.Forms.Control;
 using TextBox = Autodesk.Revit.UI.TextBox;
+using System.Windows.Input;
 
 namespace K2dPlugin.Features.PipeSum.Form
 {
@@ -25,18 +29,44 @@ namespace K2dPlugin.Features.PipeSum.Form
         private readonly SanitaryService _sanitary = new SanitaryService();
         private readonly TextNoteService _textNote = new TextNoteService();
         private readonly StormDrainService _stormDrain = new StormDrainService();
+        private readonly GasService _gasService = new GasService();
+        private readonly WaterService _waterService = new WaterService();
+
+        private static List<ElementId> _elementIds = new List<ElementId>();
 
         private static double _pipeSizeData;
+        private static string _pipeSizeDataWater;
+        private static string _pipeSizeForGas;
+        private static string _pipeSizeForWater;
+
         private static double _fixtureConnection;
+        private static double _stormDrainTotalArea;
+        private static double _gasTotalLength;
+        private static double _waterTotal;
+
         private static bool _isVent;
         private static PipeSumTabType _tabType;
+        private static StormDrainType _stormDrainType = StormDrainType.Area3Hr;
+        private static WaterPipeMaterialType _waterPipeMaterial = WaterPipeMaterialType.COPPER;
         private static bool _isSelect = true;
-        private static bool _isOveride = true;
-        private static bool _hasLeader;
+        private static bool _isOverride = false;
+        private static bool _isGasLow = true;
+        private static bool _isFlushTank = true;
+        private static bool _isWaterCold = true;
+        private static bool _hasLeader = false;
         private static bool _isOnRight;
         private static XYZ _location;
         private static bool _comboBoxIsSet = false;
         private static string selectedSanitationItem;
+
+        private static double _temporaryPipeSize = 0;
+        private static string _temporaryPipeSizeWater = string.Empty;
+
+        private static int _tempGasLength = 0;
+
+        private static List<PipeDiameterDto> _gasPipeDtos = new List<PipeDiameterDto>();
+
+        private static List<PipeDiameterDto> _waterPipeDtos = new List<PipeDiameterDto>();
         //set const text here next time
 
         public PipeSumForm(Document document, UIApplication uiApp)
@@ -47,6 +77,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.KeyPreview = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8f, System.Drawing.FontStyle.Regular);
             this.Padding = new Padding(5);
+            this.TopMost = true;
 
             Document = document;
             this.UIApp = uiApp;
@@ -57,110 +88,183 @@ namespace K2dPlugin.Features.PipeSum.Form
                 SanitationComboBox.Items.Add("Sanitary Vent");
             }
 
+            if (FlushSettingComboBox.Items.Count == 0)
+            {
+                FlushSettingComboBox.Items.Add("Flush Tank");
+                FlushSettingComboBox.Items.Add("Flush Valve");
+            }
+
+            if (_isGasLow)
+            {
+                LowPressureGasRadioBtn.Checked = true;
+            }
+            else
+            {
+                RadioBtnPressureMed.Checked = true;
+            }
+
+
+            switch (_waterPipeMaterial)
+            {
+                case WaterPipeMaterialType.COPPER:
+                    CopperRadioBtn.Checked = true;
+                    break;
+                case WaterPipeMaterialType.CPVC:
+                    CpvcRadioBtn.Checked = true;
+                    break;
+                case WaterPipeMaterialType.PEX:
+                    PexRadioBtn.Checked = true;
+                    break;
+                default:
+                    break;
+            }
+
+            if (_isWaterCold)
+            {
+                ColdRadioBtn.Checked = true;
+            }
+            else
+            {
+                HotRadioBtn.Checked = true;
+            }
+
             SanitationComboBox.SelectedItem = _comboBoxIsSet ? selectedSanitationItem : "Select Pipe System";
 
             SanitationGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             SanitationGridView.ReadOnly = true;
 
-        }
+        }   
 
         private void PipeSum_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            FormDataPopulateSwitch();
         }
 
-        private void PipeSumForm_Load(object sender, EventArgs e)
+        public void FormDataPopulateSwitch()
+        {
+            StormDrainSizeComboBox.Items.Clear();
+            PipeSizeComboBox.Items.Clear();
+
+
+            switch (PipeSumTab.SelectedTab.TabIndex)
+            {
+                case (int)PipeSumTabType.SanitaryTab:
+                    PopulateSanitationFormData();
+                    SanitationPipeSizeComboBoxSetItems();
+
+                    if (!_isOverride && SanitationGridView.Rows.Count > 0) AutoSetSizeSanitation();
+                    _tabType = PipeSumTabType.SanitaryTab;
+                    break;
+                case (int)PipeSumTabType.WaterTab:
+                    if(_isSelect) PopulateWaterFormData();
+                    SetWaterPipePressure();
+
+                    if (!_isOverride && WaterDataGrid.Rows.Count > 0) AutoSetSizeWater();
+                    _tabType = PipeSumTabType.WaterTab;
+                    break;
+                case (int)PipeSumTabType.GasTab:
+                    PopulateGasFormData();
+
+                    if (GasLengthComboBox.Items.Count == 0)
+                    {
+                        SetGasLengthComboBoxItems();
+                        GasLengthComboBox.SelectedIndex = _tempGasLength;
+                    }
+
+
+                    AutoSetSizeGas();
+                    _tabType = PipeSumTabType.GasTab;
+                    break;
+                case (int)PipeSumTabType.StormDrainTab:
+                    SetRadioBtnForStormDrainType();
+                    PopulateStormDrainFormData();
+                    StormDrainPipeSizeComboBoxSetItems();
+                    if (!_isOverride && StormDrainGridView.Rows.Count > 0) AutoSetSizeStormDrain();
+                    //SanitaryReset();
+                    _tabType = PipeSumTabType.StormDrainTab;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        private void SetGasLengthComboBoxItems()
+        {
+            GasLengthComboBox.Items.Clear();
+            var lengths = _isGasLow ? _gasService.GetGasLowLengthKeys() : _gasService.GetGasMedLengthKeys() ;
+
+            foreach (var x in lengths)
+            {
+                GasLengthComboBox.Items.Add(x);
+            }
+        }
+
+        private void SanitationPipeSizeComboBoxSetItems()
         {
             var sizes = _sanitary.GetPipeSizes();
             var sizesWithoutFirstTwo = sizes.Skip(2).ToList();
 
+            foreach (var size in sizesWithoutFirstTwo)
+            {
+                PipeSizeComboBox.Items.Add(size);
+            }
+        }
+
+        private void StormDrainPipeSizeComboBoxSetItems()
+        {
+            var sizes = _stormDrain.GetPipeSizes().Where(x => x > 0);
+
+            foreach (var size in sizes)
+            {
+                StormDrainSizeComboBox.Items.Add(size);
+            }
+        }
+
+        private void SetRadioBtnForStormDrainType()
+        {
+            switch (_stormDrainType)
+            {
+                case StormDrainType.Area1Hr:
+                    StormDrainRadioBtn1Hr.Checked = true;
+                    break;
+                case StormDrainType.Area2Hr:
+                    StormDrainRadioBtn2Hr.Checked = true;
+                    break;
+                case StormDrainType.Area3Hr:
+                    StormDrainRadioBtn3Hr.Checked = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void PipeSumForm_Load(object sender, EventArgs e)
+        {
+
+            PipeSumTab.SelectedIndex = (int)_tabType;
             if (_isSelect)
             {
-                if (SanitationComboBox.SelectedItem != null)
-                {
-                    SanitationComboBox.SelectedIndex = 0;
-                }
-
-                foreach (var size in sizesWithoutFirstTwo)
-                {
-                    PipeSizeComboBox.Items.Add(size);
-                }
-
-                switch (PipeSumTab.SelectedTab.TabIndex)
-                {
-                    case (int)PipeSumTabType.SanitaryTab:
-                        PopulateSanitationFormData();
-                        if (!_isOveride) AutoSetSizeSanitation();
-                        _tabType = PipeSumTabType.SanitaryTab;
-                        break;
-                    case (int)PipeSumTabType.WaterTab:
-                        _tabType = PipeSumTabType.WaterTab;
-                        break;
-                    case (int)PipeSumTabType.GasTab:
-                        _tabType = PipeSumTabType.GasTab;
-                        break;
-                    case (int)PipeSumTabType.StormDrainTab:
-                        _tabType = PipeSumTabType.StormDrainTab;
-                        break;
-                    default:
-                        break;
-                }
-                /*PopulateSanitationFormData();
-                AutoSetSizeSanitation();*/
+                GetElementId();
+                FormDataPopulateSwitch();
             }
             else
             {
+                var forUpdate = GetSelectedDataFromRevit(true);
 
-                var forUpdate = GetSelectedDataFromRevit();
 
                 if (forUpdate.Any()) UpdateSanitaryText(forUpdate.FirstOrDefault().Id);
+                FormDataPopulateSwitch();
 
                 this.BringToFront();
             }
 
-
-            if (!_isOveride) AutoSetSizeSanitation();
 
             if (_location != null)
             {
                 this.Location = new System.Drawing.Point((int)_location.X, (int)_location.Y);
             }
         }
-
-
-        /*private void PipeSumForm_MouseClick(object sender, MouseEventArgs e)
-        {
-
-            var uiApp = this.UIApp.ActiveUIDocument.Application;
-            var uiDoc = uiApp.ActiveUIDocument;
-            var doc = uiDoc.Document;
-
-            var loc = e.Location;
-
-            var revitLoc = new XYZ(loc.X, loc.Y, 0.0);
-
-            using (var transaction = new Transaction(doc, "Add Text"))
-            {
-                transaction.Start();
-
-                var textNoteType = new FilteredElementCollector(doc)
-                    .OfClass(typeof(TextNoteType))
-                    .Cast<TextNoteType>()
-                    .FirstOrDefault();
-
-                var fixtureString = "\"(" + _fixtureConnection + ")";
-                var text = _pipeSizeData + fixtureString;
-                var textNote = TextNote.Create(doc, doc.ActiveView.Id, revitLoc, text, textNoteType.Id);
-
-                textNote.AddLeader(TextNoteLeaderTypes.TNLT_STRAIGHT_L);
-                textNote.LeaderLeftAttachment = LeaderAtachement.TopLine;
-                var leader = textNote.GetLeaders().FirstOrDefault();
-
-                doc.Regenerate();
-
-                transaction.Commit();
-            }
-        }*/
 
         private void SanitationSelectTxtBtn_Click(object sender, EventArgs e)
         {
@@ -190,7 +294,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             SanitationGridView.Rows.Clear();
             const string totalString = @"Total Selected: ";
             SanitationTotalSelectedLabel.Text = totalString;
-            var selectedPipes = GetSelectedDataFromRevit();
+            var selectedPipes =  GetSelectedDataFromRevit(false);
 
             foreach (var pipe in selectedPipes)
             {
@@ -203,14 +307,79 @@ namespace K2dPlugin.Features.PipeSum.Form
             SanitationTotalSelectedLabel.Text += total.ToString();
         }
 
-        private IEnumerable<Pipe> GetSelectedDataFromRevit()
+        private void PopulateWaterFormData()
+        {
+            WaterDataGrid.Rows.Clear();
+            const string totalString = @"Total Selected: ";
+            WaterTotalSelectedLabel.Text = totalString;
+            var selectedPipes = GetSelectedDataFromRevit(false);
+
+            foreach (var pipe in selectedPipes)
+            {
+                WaterDataGrid.Rows.Add(pipe.Id, pipe.Count, pipe.PipeSize + '"', pipe.Unit);
+            }
+
+            var total = selectedPipes.Sum(x => x.Unit);
+            _waterTotal = total;
+            WaterTotalSelectedLabel.Text += _waterTotal.ToString();
+        }
+
+        private void PopulateStormDrainFormData()
+        {
+            StormDrainGridView.Rows.Clear();
+            const string totalString = @"Total Selected: ";
+            StormDrainTotalSelectedLabel.Text = totalString;
+            var selectedPipes = GetSelectedDataFromRevit(false);
+
+            foreach (var pipe in selectedPipes)
+            {
+                StormDrainGridView.Rows.Add(pipe.Id, pipe.Count, pipe.PipeSize + '"', pipe.Unit);
+            }
+
+            var total = selectedPipes.Sum(x => x.Unit);//this is area for stormDrain
+            _stormDrainTotalArea = total;
+            StormDrainTotalSelectedLabel.Text += total.ToString();
+        }
+        private void PopulateGasFormData()
+        {
+            GasDataGrid.Rows.Clear();
+            const string totalString = @"Total Selected: ";
+            GasTotalLengthLabel.Text = totalString;
+            var selectedPipes = GetSelectedDataFromRevit(false);
+
+            foreach (var pipe in selectedPipes)
+            {
+                GasDataGrid.Rows.Add(pipe.Id, pipe.Count, pipe.PipeSize + '"', pipe.Unit);
+            }
+
+            var total = selectedPipes.Sum(x => x.Unit);//this is area for stormDrain
+            _gasTotalLength = total;
+            GasTotalLengthLabel.Text += total.ToString();
+        }
+
+        private void GetElementId()
+        {
+            var doc = this.UIApp.ActiveUIDocument.Document;
+            var data = this.UIApp.ActiveUIDocument.Selection.GetElementIds();
+
+            foreach (var id in data)
+            {
+                var contains = _elementIds.Contains(id);
+                if (doc.GetElement(id) is TextNote && _isSelect && !contains) _elementIds.Add(id);
+            }
+        }
+
+        private IEnumerable<Pipe> GetSelectedDataFromRevit(bool isUpDate)
         {
             var doc = this.UIApp.ActiveUIDocument.Document;
             var pipeList = new List<Pipe>();
             var count = 1;
+            var data = isUpDate ? this.UIApp.ActiveUIDocument.Selection.GetElementIds() : _elementIds;
+
             //create a Pipe from the selected element
-            foreach (var elementId in this.UIApp.ActiveUIDocument.Selection.GetElementIds())
+            foreach (var elementId in data)
             {
+
                 if (!(doc.GetElement(elementId) is TextNote element)) continue;
 
                 var text = element.Text;
@@ -243,23 +412,113 @@ namespace K2dPlugin.Features.PipeSum.Form
 
         private void SanitaryReset()
         {
+            _elementIds = new List<ElementId>();
             _isSelect = true;
+            _hasLeader = false;
+            _isOverride = false;
+            _pipeSizeData = 0;
+            _temporaryPipeSize = 0;
+
             SanitationTotalSelectedLabel.Text = @"Total Selected: ";
             SanitationGridView.Rows.Clear();
             SanitaionMaxUnitLabel.Text = @"Max Unit: ";
             PipeSizeLabel.Text = @"PipeSize: ";
             PipeSizeComboBox.SelectedItem = "Select Override Size";
-            SanitationComboBox.SelectedItem = "Select Pipe System";
+            SanitationComboBox.SelectedValue = "Select Pipe System";
             LeftArrowLocation.Checked = false;
             RIghtArrowLocation.Checked = false;
         }
 
         private void SanitationOverrideBtn_Click(object sender, EventArgs e)
         {
-            PipeSizeLabel.Text = @"PipeSize: ";
-            PipeSizeLabel.Text += _pipeSizeData.ToString();
-            _isOveride = true;
+            if (PipeSizeComboBox.Visible)
+            {
+                PipeSizeLabel.Text = @"PipeSize: ";
+                _pipeSizeData = _temporaryPipeSize;
+                PipeSizeLabel.Text += _pipeSizeData.ToString();
+                _isOverride = true;
+            }
 
+            PipeSizeComboBox.Visible = !PipeSizeComboBox.Visible;
+            PipeSizeComboBox.Enabled = !PipeSizeComboBox.Enabled;
+        }
+
+        private void StormDrainOverrideBtn_Click(object sender, EventArgs e)
+        {
+            if (StormDrainSizeComboBox.Visible)
+            {
+                _pipeSizeData = _temporaryPipeSize;
+                StormDrainPipeSizeLabel.Text = $"PipeSize: {_pipeSizeData}";
+                _isOverride = true;
+            }
+
+            StormDrainSizeComboBox.Visible = !StormDrainSizeComboBox.Visible;
+            StormDrainSizeComboBox.Enabled = !StormDrainSizeComboBox.Enabled;
+        }
+
+        private void AutoSetSizeStormDrain()
+        {
+            var dtos = _stormDrain.GetListOfPipeDto().ToArray();
+            var count = dtos.Count();
+            var DiameterDtos = new List<PipeDiameterDto>();
+
+            switch (_stormDrainType)
+            {
+                case StormDrainType.Area1Hr:
+                    for (var i = 0; i < count - 1; i++)
+                    {
+                        var dto = new PipeDiameterDto()
+                        {
+                            Diameter = dtos[i + 1].Diameter,
+                            Max = dtos[i + 1].Area1Hr,
+                            Min = dtos[i].Area1Hr
+                        };
+
+                        DiameterDtos.Add(dto);
+                    }
+                    break;
+                case StormDrainType.Area2Hr:
+                    for (var i = 0; i < count - 1; i++)
+                    {
+                        var dto = new PipeDiameterDto()
+                        {
+                            Diameter = dtos[i + 1].Diameter,
+                            Max = dtos[i + 1].Area2Hr,
+                            Min = dtos[i].Area2Hr
+                        };
+
+                        DiameterDtos.Add(dto);
+                    }
+                    break;
+                case StormDrainType.Area3Hr:
+                    for (var i = 0; i < count - 1; i++)
+                    {
+                        var dto = new PipeDiameterDto()
+                        {
+                            Diameter = dtos[i + 1].Diameter,
+                            Max = dtos[i + 1].Area3Hr,
+                            Min = dtos[i].Area3Hr
+                        };
+
+                        DiameterDtos.Add(dto);
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+
+            foreach (var diaDto in DiameterDtos)
+            {
+                if (_stormDrainTotalArea >= diaDto.Min && _stormDrainTotalArea < diaDto.Max)
+                {
+                    _pipeSizeData = diaDto.Diameter;
+                    StormDrainPipeSizeLabel.Text = @"PipeSize: ";
+                    StormDrainMaxLabel.Text = @"Max Unit: ";
+                    StormDrainMaxLabel.Text += diaDto.Max.ToString();
+                    StormDrainPipeSizeLabel.Text += _pipeSizeData.ToString();
+                }
+            }
         }
 
         private void AutoSetSizeSanitation()
@@ -300,7 +559,7 @@ namespace K2dPlugin.Features.PipeSum.Form
 
             foreach (var diaDto in DiameterDtos)
             {
-                if (_fixtureConnection > diaDto.Min && _fixtureConnection < diaDto.Max)
+                if (_fixtureConnection >= diaDto.Min && _fixtureConnection < diaDto.Max)
                 {
                     _pipeSizeData = diaDto.Diameter;
                     PipeSizeLabel.Text = @"PipeSize: ";
@@ -311,16 +570,48 @@ namespace K2dPlugin.Features.PipeSum.Form
             }
         }
 
+        private void AutoSetSizeGas()
+        {
+            int trueIndex = -1;
+            GasPipeSizelabel.Text = @"PipeSize: ";
+            _pipeSizeForGas = string.Empty;
+
+            for (int i = 0; i < _gasPipeDtos.Count; i++)
+            {
+                var diaDto = _gasPipeDtos[i];
+                if (_gasTotalLength >= diaDto.Min && _gasTotalLength < diaDto.Max)
+                {
+                    trueIndex = i;
+                    break; 
+                }
+            }
+
+            if (trueIndex > -1)
+            {
+                var radius = _isGasLow ? _gasService.DiameterLowList() : _gasService.DiameterMedList();
+
+                var diameter = radius[trueIndex];
+                _pipeSizeForGas = diameter;
+                GasPipeSizelabel.Text += _pipeSizeForGas;
+            }
+
+            if(trueIndex < 0 && _pipeSizeForGas.Length == 0 && GasDataGrid.Rows.Count > 0 && GasLengthComboBox.Text != null)
+            {
+                MessageBox.Show("Out of Range, Set New Length", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         private void PipeSizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (PipeSizeComboBox.SelectedItem != null)
             {
-                _pipeSizeData = (double)PipeSizeComboBox.SelectedItem;
+                _temporaryPipeSize = (double)PipeSizeComboBox.SelectedItem;
                 var dtos = _sanitary.GetListOfPipeDto().ToArray();
-                var pipe = dtos.Where(x => x.Diameter == _pipeSizeData).First();
+                var pipe = dtos.Where(x => x.Diameter == _temporaryPipeSize).First();
                 SanitaionMaxUnitLabel.Text = @"Max Unit: ";
-                SanitaionMaxUnitLabel.Text += _isVent ? pipe.Vent.ToString() : pipe.WasteFixture.ToString();
-
+                var maxValue = _isVent ? pipe.Vent : pipe.WasteFixture;
+                SanitaionMaxUnitLabel.Text += maxValue.ToString();
+                SanitationOverrideBtn.Enabled = maxValue > _fixtureConnection;
             }
         }
 
@@ -352,6 +643,31 @@ namespace K2dPlugin.Features.PipeSum.Form
                         .OfClass(typeof(ElementType))
                         .WherePasses(filter).Where(x => x.Id.ToString() == "243");
 
+                    var text = string.Empty;
+                    var pipeSize = string.Empty;
+
+                    switch (_tabType)
+                    {
+                        case PipeSumTabType.SanitaryTab:
+                            text = _fixtureConnection.ToString();
+                            pipeSize = _pipeSizeData.ToString();
+                            break;
+                        case PipeSumTabType.GasTab:
+                            text = _gasTotalLength.ToString();
+                            pipeSize = _pipeSizeForGas;
+                            break;
+                        case PipeSumTabType.StormDrainTab:
+                            text = _stormDrainTotalArea.ToString();
+                            pipeSize = _pipeSizeData.ToString();
+                            break;
+                        case PipeSumTabType.WaterTab:
+                            text = _waterTotal.ToString();
+                            pipeSize = _pipeSizeDataWater.ToString();
+                            break;
+                        default:
+                            break;
+                    }
+
 
                     foreach (var elementId in selectedElementIds)
                     {
@@ -360,8 +676,8 @@ namespace K2dPlugin.Features.PipeSum.Form
 
                         if (id != test) continue;
 
-                        var fixtureString = "(" + _fixtureConnection + ")";
-                        var newText = _pipeSizeData + fixtureString;
+                        var fixtureString = "(" + text + ")";
+                        var newText = pipeSize + fixtureString;
                         element.Text = newText.Replace("(", "\"(");
 
                         var location = _isOnRight
@@ -411,6 +727,10 @@ namespace K2dPlugin.Features.PipeSum.Form
         {
             _location = null;
             SanitaryReset();
+            StormDrainRest();
+            GasResetAction();
+            WaterReset();
+            _elementIds = new List<ElementId>();
             this.Dispose();
         }
 
@@ -428,11 +748,531 @@ namespace K2dPlugin.Features.PipeSum.Form
 
         private void StormDrainSelectBtn_Click(object sender, EventArgs e)
         {
-            var shit = _stormDrain.GetListOfPipeDto();
-            _isSelect = true;
+            if (!_isSelect) _isSelect = !_isSelect;
+
             this.Hide();
             var location = this.Location;
             _location = new XYZ(location.X, location.Y, 0);
+        }
+
+        private void GasSelectBtn_Click(object sender, EventArgs e)
+        {   
+            if (!_isSelect) _isSelect = !_isSelect;
+
+            this.Hide();
+            var location = this.Location;
+            _location = new XYZ(location.X, location.Y, 0);
+        }
+
+        private void SetStormDrainMaxUnit()
+        {
+            var dtos = _sanitary.GetListOfPipeDto().ToArray();
+            var pipe = dtos.Where(x => x.Diameter == _pipeSizeData).First();
+            SanitaionMaxUnitLabel.Text = @"Max Unit: ";
+            SanitaionMaxUnitLabel.Text += _isVent ? pipe.Vent.ToString() : pipe.WasteFixture.ToString();
+        }
+
+        private void StormDrainRadioBtn1Hr_CheckedChanged(object sender, EventArgs e)
+        {
+            _stormDrainType = StormDrainType.Area1Hr;
+            if (!_isOverride && StormDrainGridView.Rows.Count > 0)
+            {
+                AutoSetSizeStormDrain();
+            }
+            else
+            {
+                SetStormDrainMaxUnit();
+            }
+        }
+
+        private void StormDrainRadioBtn2Hr_CheckedChanged(object sender, EventArgs e)
+        {
+            _stormDrainType = StormDrainType.Area2Hr;
+            if (!_isOverride && StormDrainGridView.Rows.Count > 0)
+            {
+                AutoSetSizeStormDrain();
+            }
+            else
+            {
+                SetStormDrainMaxUnit();
+            }
+        }
+
+        private void StormDrainRadioBtn3Hr_CheckedChanged(object sender, EventArgs e)
+        {
+            _stormDrainType = StormDrainType.Area3Hr;
+            if (!_isOverride && StormDrainGridView.Rows.Count > 0) AutoSetSizeStormDrain();
+
+            SetStormDrainMaxLabel();
+        }
+
+        private void SetStormDrainMaxLabel()
+        {
+            var dtos = _stormDrain.GetListOfPipeDto().ToArray();
+            var pipe = dtos.Where(x => x.Diameter == _pipeSizeData).First();
+            var text = string.Empty;
+            switch (_stormDrainType)
+            {
+                case StormDrainType.Area1Hr:
+                    text = pipe.Area1Hr.ToString();
+                    break;
+                case StormDrainType.Area2Hr:
+                    text = pipe.Area2Hr.ToString();
+                    break;
+                case StormDrainType.Area3Hr:
+                    text = pipe.Area3Hr.ToString();
+                    break;
+                default:
+                    break;
+
+            }
+
+            StormDrainMaxLabel.Text = $"Max Unit: {text}";
+
+        }
+
+        private void StormDrainSizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (StormDrainSizeComboBox.SelectedItem != null)
+            {
+                _temporaryPipeSize = (double)StormDrainSizeComboBox.SelectedItem;
+                var dtos = _stormDrain.GetListOfPipeDto().ToArray();
+                var pipe = dtos.Where(x => x.Diameter == _temporaryPipeSize).First();
+                StormDrainMaxLabel.Text = @"Max Unit: ";
+                var text = 0.0;
+
+                switch (_stormDrainType)
+                {
+                    case StormDrainType.Area1Hr:
+                        text = pipe.Area1Hr;
+                        break;
+                    case StormDrainType.Area2Hr:
+                        text = pipe.Area2Hr;
+                        break;
+                    case StormDrainType.Area3Hr:
+                         text = pipe.Area3Hr;
+                        break;
+                    default:
+                        break;
+
+                }
+
+                StormDrainMaxLabel.Text += text.ToString();
+
+                StormDrainOverrideBtn.Enabled = text > _stormDrainTotalArea;
+            }
+        }
+
+        private void ApplyClick()
+        {
+            _isSelect = !_isSelect;
+            this.Hide();
+            var location = this.Location;
+            _location = new XYZ(location.X, location.Y, 0);
+        }
+
+        private void StormDrainApplyBtn_Click(object sender, EventArgs e)
+        {
+            ApplyClick();
+        }
+
+        private void LeftLeaderRadioBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            _isOnRight = false;
+            _hasLeader = LeftLeaderRadioBtn.Checked || RightLeaderRadioBtn.Checked;
+        }
+
+        private void RightLeaderRadioBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            _isOnRight = true;
+            _hasLeader = LeftLeaderRadioBtn.Checked || RightLeaderRadioBtn.Checked;
+        }
+
+        private void StormDrainResetBtn_Click(object sender, EventArgs e)
+        {
+            StormDrainRest();
+        }
+
+        private void GasReset_Click(object sender, EventArgs e)
+        {
+            GasResetAction();
+        }
+
+        private void GasResetAction()
+        {
+            _elementIds = new List<ElementId>();
+            _isSelect = true;
+            _hasLeader = false;
+            _isOverride = false;
+            _pipeSizeData = 0;
+            _temporaryPipeSize = 0;
+            _tempGasLength = 0;
+            _isGasLow = true;
+
+            GasTotalLengthLabel.Text = @"Total Length: ";
+            GasDataGrid.Rows.Clear();
+            GasPipeSizelabel.Text = @"PipeSize: ";
+        }
+
+        private void StormDrainRest()
+        {
+            _elementIds = new List<ElementId>();
+            _isSelect = true;
+            _hasLeader = false;
+            _isOverride = false;
+            _pipeSizeData = 0;
+            _temporaryPipeSize = 0;
+
+            StormDrainTotalSelectedLabel.Text = @"Total Selected: ";
+            StormDrainGridView.Rows.Clear();
+            StormDrainMaxLabel.Text = @"Max Unit: ";
+            StormDrainPipeSizeLabel.Text = @"PipeSize: ";
+            PipeSizeComboBox.SelectedItem = "Select Override Size";
+            LeftLeaderRadioBtn.Checked = false;
+            RightLeaderRadioBtn.Checked = false;
+        }
+
+        private void LowPressureGasRadioBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            _isGasLow = true;
+            if(GasDataGrid.Rows.Count > 0) AutoSetSizeGas();
+        }
+
+        private void RadioBtnPressureMed_CheckedChanged(object sender, EventArgs e)
+        {
+            _isGasLow = false;
+            if (GasDataGrid.Rows.Count > 0) AutoSetSizeGas();
+        }
+
+        private void GasLengthComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _gasPipeDtos = new List<PipeDiameterDto>();
+
+            if (GasLengthComboBox.SelectedItem != null)
+            {
+                var key = (int)GasLengthComboBox.SelectedItem;
+                _tempGasLength = GasLengthComboBox.SelectedIndex;
+
+                var list = _isGasLow
+                    ? _gasService.GetListOfLowLengthByKey(key)
+                    : _gasService.GetListOfMedLengthByKey(key);
+
+                for (var i = 0; i < list.Count - 1; i++)
+                {
+                    var dto = new PipeDiameterDto()
+                    {
+                        Max = list[i + 1],
+                        Min = list[i]
+                    };
+
+                    _gasPipeDtos.Add(dto);
+                }
+
+                AutoSetSizeGas();
+            }
+        }
+
+        private void GasApplyBtn_Click(object sender, EventArgs e)
+        {
+            ApplyClick();
+        }
+
+        private void GasLeftLeaderLocation_CheckedChanged(object sender, EventArgs e)
+        {
+            _isOnRight = false;
+            _hasLeader = GasRightLeaderLocation.Checked || GasLeftLeaderLocation.Checked;
+        }
+
+        private void GasRightLeaderLocation_CheckedChanged(object sender, EventArgs e)
+        {
+            _isOnRight = true;
+            _hasLeader = GasRightLeaderLocation.Checked || GasLeftLeaderLocation.Checked;
+        }
+
+        private void WaterSelectBtn_Click(object sender, EventArgs e)
+        {
+            if (!_isSelect) _isSelect = !_isSelect;
+
+            this.Hide();
+            var location = this.Location;
+            _location = new XYZ(location.X, location.Y, 0);
+        }
+
+        private void FlushSettingComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (FlushSettingComboBox.SelectedItem != null)
+            {
+                _isFlushTank = FlushSettingComboBox.SelectedItem.ToString() == "Flush Tank";
+            }
+
+            SetWaterPipePressure();
+        }
+
+        private void SetWaterPipePressure()
+        {
+            PsiPerFootComboBox.Items.Clear();
+
+            switch (_waterPipeMaterial)
+            {
+                case WaterPipeMaterialType.COPPER:
+                    var copperData = new List<double>();
+                    WaterSystemGroupBox.Enabled = true;
+
+                    if (_isFlushTank)
+                    {
+                        copperData = _isWaterCold
+                            ? _waterService.CopperFlushTankColdKeys()
+                            : _waterService.CopperFlushTankHotKeys();
+                    }
+                    else
+                    {
+                        copperData = _waterService.CopperFlushValveColdKeys();
+                    }
+
+
+                    foreach (var key in copperData)
+                    {
+                        PsiPerFootComboBox.Items.Add(key);
+                    }
+
+                    break;
+                case WaterPipeMaterialType.CPVC:
+                    WaterSystemGroupBox.Enabled = false;
+                    var dataCpvc = _isFlushTank 
+                        ? _waterService.CpvcFlushTankKeys()
+                        : _waterService.CpvcFlushValveKeys();
+
+                    foreach (var key in dataCpvc)
+                    {
+                        PsiPerFootComboBox.Items.Add(key);
+                    }
+
+
+                    break;
+                case WaterPipeMaterialType.PEX:
+                    WaterSystemGroupBox.Enabled = false;
+                    var dataPex = _isFlushTank
+                        ? _waterService.PexFlushTankKeys()
+                        : _waterService.PexFlushValveKeys();
+
+                    foreach (var key in dataPex)
+                    {
+                        PsiPerFootComboBox.Items.Add(key);
+                    }
+
+                    break;
+                default:
+                    break;
+
+            }
+        }
+
+        private void CopperRadioBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CopperRadioBtn.Checked)
+            {
+                _waterPipeMaterial = WaterPipeMaterialType.COPPER;
+                SetWaterPipePressure();
+            }
+        }
+
+        private void CpvcRadioBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CpvcRadioBtn.Checked)
+            {
+                _waterPipeMaterial = WaterPipeMaterialType.CPVC;
+                SetWaterPipePressure();
+            }
+        }
+
+        private void PexRadioBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (PexRadioBtn.Checked)
+            {
+                _waterPipeMaterial = WaterPipeMaterialType.PEX;
+                SetWaterPipePressure();
+            }
+        }
+
+        private void ColdRadioBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ColdRadioBtn.Checked)_isWaterCold = true;
+
+            SetWaterPipePressure();
+        }
+
+        private void HotRadioBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (HotRadioBtn.Checked)_isWaterCold = false;
+
+            SetWaterPipePressure();
+        }
+
+        private void PsiPerFootComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _waterPipeDtos = new List<PipeDiameterDto>();
+            PsiPerFootLabel.Text = "PSI/Foot: ";
+
+            if (PsiPerFootComboBox.SelectedItem != null)
+            {
+                var key = (double)PsiPerFootComboBox.SelectedItem;
+                PsiPerFootLabel.Text += key.ToString();
+                var dtoSource = new List<int>();
+
+                switch (_waterPipeMaterial)
+                {
+                    case WaterPipeMaterialType.COPPER:
+                        if (_isFlushTank)
+                        {
+                            dtoSource = _isWaterCold
+                                ? _waterService.GetListOfCopperFlushTankColdByKey(key)
+                                : _waterService.GetListOfCopperFlushTankHotByKey(key);
+                        }
+                        else
+                        {
+                            dtoSource = _waterService.GetListOfCopperFlushValveColdByKey(key);
+                        }
+
+                        break;
+                    case WaterPipeMaterialType.CPVC:
+                        dtoSource = _isFlushTank
+                            ? _waterService.GetListOfCpvcFlushTankByKey(key)
+                            : _waterService.GetListPexFlushValveByKey(key);
+
+                        break;
+                    case WaterPipeMaterialType.PEX:
+                        dtoSource = _isFlushTank
+                            ? _waterService.GetListPexFlushTankByKey(key)
+                            : _waterService.GetListPexFlushValveByKey(key);
+                        break;
+                    default:
+                        break;
+                }
+
+                for (var i = 0; i < dtoSource.Count - 1; i++)
+                {
+                    var dto = new PipeDiameterDto()
+                    {
+                        Max = dtoSource[i + 1],
+                        Min = dtoSource[i]
+                    };
+
+                    _waterPipeDtos.Add(dto);
+                }
+            }
+
+            if(!_isOverride && WaterDataGrid.Rows.Count > 0) AutoSetSizeWater();
+        }
+
+        private void AutoSetSizeWater()
+        {
+            int trueIndex = -1;
+            WaterPipeSizeLabel.Text = @"PipeSize: ";
+            _pipeSizeForWater = string.Empty;
+
+            for (int i = 0; i < _waterPipeDtos.Count; i++)
+            {
+                var diaDto = _waterPipeDtos[i];
+                if (_waterTotal >= diaDto.Min && _waterTotal < diaDto.Max)
+                {
+                    trueIndex = i;
+                    break;
+                }
+            }
+
+            if (trueIndex > -1)
+            {
+                var diameters = new List<string>();
+                switch (_waterPipeMaterial)
+                {
+                    case WaterPipeMaterialType.COPPER:
+                        diameters = _isFlushTank
+                                ? _waterService.DiameterCopperFlushTank()
+                                : _waterService.DiameterCopperFlushValve();
+
+                        break;
+                    case WaterPipeMaterialType.CPVC:
+                        diameters = _isFlushTank
+                            ? _waterService.DiameterCpvcFlushTank()
+                            : _waterService.DiameterCpvcFlushValve();
+
+                        break;
+                    case WaterPipeMaterialType.PEX:
+                        diameters = _isFlushTank
+                            ? _waterService.DiameterPexFlushTank()
+                            : _waterService.DiameterPexFlushValve();
+                        break;
+                    default:
+                        break;  
+                }
+
+                WaterPipeSizeComboBox.Items.Clear();
+
+                foreach (var dia in diameters)
+                {
+                    WaterPipeSizeComboBox.Items.Add(dia);
+                }
+
+                var diameter = diameters[trueIndex];
+                _pipeSizeDataWater = diameter;
+                WaterPipeSizeLabel.Text += _pipeSizeDataWater;
+            }
+
+            if (trueIndex < 0 && _pipeSizeForWater.Length == 0 && WaterDataGrid.Rows.Count > 0)
+            {
+                MessageBox.Show("Out of Range, Set New Length", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void WaterOverrideBtn_Click(object sender, EventArgs e)
+        {
+            if (WaterPipeSizeComboBox.Visible)
+            {
+                WaterPipeSizeLabel.Text = @"PipeSize: ";
+                _pipeSizeDataWater = _temporaryPipeSizeWater;
+                WaterPipeSizeLabel.Text += _pipeSizeDataWater.ToString();
+                _isOverride = true;
+            }
+
+            WaterPipeSizeComboBox.Visible = !WaterPipeSizeComboBox.Visible;
+            WaterPipeSizeComboBox.Enabled = !WaterPipeSizeComboBox.Enabled;
+        }
+
+        private void WaterPipeSizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (WaterPipeSizeComboBox.SelectedItem != null)
+            {
+                
+                _temporaryPipeSizeWater = WaterPipeSizeComboBox.SelectedItem.ToString();
+            }
+        }
+
+        private void WaterApplyBtn_Click(object sender, EventArgs e)
+        {
+            _isSelect = !_isSelect;
+            this.Hide();
+            var location = this.Location;
+            _location = new XYZ(location.X, location.Y, 0);
+        }
+
+        private void WaterReset()
+        {
+            WaterDataGrid.Rows.Clear();
+            _elementIds = new List<ElementId>();
+            _isSelect = true;
+            _hasLeader = false;
+            _isOverride = false;
+            _pipeSizeDataWater = string.Empty;
+            _temporaryPipeSizeWater = string.Empty;
+            _isWaterCold = true;
+
+            PsiPerFootLabel.Text = "PSI/Foot: ";
+            WaterPipeSizeLabel.Text = "Pipe Size: ";
+        }
+
+        private void WaterRestBtn_Click(object sender, EventArgs e)
+        {
+            WaterReset();
         }
     }
 }
