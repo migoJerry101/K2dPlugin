@@ -9,7 +9,9 @@ namespace K2dPlugin.Features.PipeSum.Dto
     internal class StormDrainDto
     {
         public double Diameter { get; set; }
-        public double Area3Hr { get; set; }
+        public double Area1Hr { get; set; }
+
         public double Area2Hr { get; set; }
+        public double Area3Hr { get; set; }
     }
 }

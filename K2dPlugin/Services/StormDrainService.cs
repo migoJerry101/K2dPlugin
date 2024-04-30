@@ -30,7 +30,7 @@ namespace K2dPlugin.Services
             return sizes;
         }
 
-        private static List<StormDrainDto> LoadPipeDtoFromCsv(string filePath)
+        private static IEnumerable<StormDrainDto> LoadPipeDtoFromCsv(string filePath)
         {
             var pipeDtoList = new List<StormDrainDto>();
 
@@ -50,8 +50,9 @@ namespace K2dPlugin.Services
                     var pipeDto = new StormDrainDto
                     {
                         Diameter = double.Parse(fields[0]),
+                        Area1Hr = double.Parse(fields[1]),
                         Area2Hr = double.Parse(fields[2]),
-                        Area3Hr = double.Parse(fields[1])
+                        Area3Hr = double.Parse(fields[3])
                     };
 
                     pipeDtoList.Add(pipeDto);
@@ -60,5 +61,7 @@ namespace K2dPlugin.Services
 
             return pipeDtoList;
         }
+
+
     }
 }

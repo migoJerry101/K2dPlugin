@@ -10,7 +10,7 @@ namespace K2dPlugin.Features.PipeSum
     {
         public string Id { get; set; }
         public string PipeSize { get; set; }
-        public double Unit { get; set; }
+        public double Unit { get; set; }//area
         public int Count { get; set; }
     }
 }
