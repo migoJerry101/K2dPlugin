@@ -11,55 +11,78 @@ namespace K2dPlugin.Services
 {
     internal class StormDrainService
     {
+        private static readonly List<StormDrainDto> PipeDtoList = new List<StormDrainDto>()
+        {
+            new StormDrainDto()
+            {
+                Diameter = 0,
+                Area1Hr = 0,
+                Area2Hr = 0,
+                Area3Hr = 0,
+            },
+            new StormDrainDto()
+            {
+                Diameter = 3,
+                Area1Hr = 3288,
+                Area2Hr = 1644,
+                Area3Hr = 1096,
+            },
+            new StormDrainDto()
+            {
+                Diameter = 4,
+                Area1Hr = 7520,
+                Area2Hr = 3760,
+                Area3Hr = 2506,
+            },
+            new StormDrainDto()
+            {
+                Diameter = 6,
+                Area1Hr = 21400,
+                Area2Hr = 10700,
+                Area3Hr = 7133,
+            },
+            new StormDrainDto()
+            {
+                Diameter = 8,
+                Area1Hr = 46000,
+                Area2Hr = 23000,
+                Area3Hr = 15033,
+            },
+            new StormDrainDto()
+            {
+                Diameter = 10,
+                Area1Hr = 82800,
+                Area2Hr = 41400,
+                Area3Hr = 27600,
+            },
+            new StormDrainDto()
+            {
+                Diameter = 12,
+                Area1Hr = 133200,
+                Area2Hr = 66600,
+                Area3Hr = 44400,
+            },
+            new StormDrainDto()
+            {
+                Diameter = 15,
+                Area1Hr = 238200,
+                Area2Hr = 119000,
+                Area3Hr = 79333,
+            },
+        };
+
         public IEnumerable<StormDrainDto> GetListOfPipeDto()
         {
-            const string partial = "\\Addins\\2021\\Resources\\Lookup\\STORM_DRAIN_PIPE_SIZING.csv";
-            var filePath = CsvPathGenerator.GetCsvFilePath();
-            var pipeDtoList = LoadPipeDtoFromCsv(filePath + partial);
-
-            return pipeDtoList;
+            return PipeDtoList.OrderBy(x =>x.Diameter);
         }
 
         public IEnumerable<double> GetPipeSizes()
         {
-            const string partial = "\\Addins\\2021\\Resources\\Lookup\\STORM_DRAIN_PIPE_SIZING.csv";
-            var filePath = CsvPathGenerator.GetCsvFilePath();
-            var pipeDtoList = LoadPipeDtoFromCsv(filePath + partial);
-            var sizes = pipeDtoList.Select(x => x.Diameter);
+            var sizes = PipeDtoList
+                .OrderBy(x => x.Diameter)
+                .Select(x => x.Diameter);
 
             return sizes;
-        }
-
-        private static IEnumerable<StormDrainDto> LoadPipeDtoFromCsv(string filePath)
-        {
-            var pipeDtoList = new List<StormDrainDto>();
-
-            using (var parser = new TextFieldParser(filePath))
-            {
-                parser.TextFieldType = FieldType.Delimited;
-                parser.SetDelimiters(",");
-
-                parser.TrimWhiteSpace = true;
-                parser.ReadLine();
-
-                while (!parser.EndOfData)
-                {
-
-                    var fields = parser.ReadFields();
-
-                    var pipeDto = new StormDrainDto
-                    {
-                        Diameter = double.Parse(fields[0]),
-                        Area1Hr = double.Parse(fields[1]),
-                        Area2Hr = double.Parse(fields[2]),
-                        Area3Hr = double.Parse(fields[3])
-                    };
-
-                    pipeDtoList.Add(pipeDto);
-                }
-            }
-
-            return pipeDtoList;
         }
 
 
