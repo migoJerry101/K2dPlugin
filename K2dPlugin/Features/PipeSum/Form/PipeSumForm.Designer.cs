@@ -33,9 +33,6 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.components = new System.ComponentModel.Container();
             this.PipeSumTab = new System.Windows.Forms.TabControl();
             this.SanitaryTab = new System.Windows.Forms.TabPage();
-            this.SanitationHeadLocation = new System.Windows.Forms.GroupBox();
-            this.RIghtArrowLocation = new System.Windows.Forms.RadioButton();
-            this.LeftArrowLocation = new System.Windows.Forms.RadioButton();
             this.ApplyBtn = new System.Windows.Forms.Button();
             this.PipeSizeLabel = new System.Windows.Forms.Label();
             this.PipeSizeComboBox = new System.Windows.Forms.ComboBox();
@@ -54,9 +51,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.SanitaionPipeSystemLabel = new System.Windows.Forms.Label();
             this.SanitationComboBox = new System.Windows.Forms.ComboBox();
             this.WaterTab = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.WaterMaxUnit = new System.Windows.Forms.Label();
             this.WaterApplyBtn = new System.Windows.Forms.Button();
             this.WaterPipeSizeLabel = new System.Windows.Forms.Label();
             this.WaterPipeSizeComboBox = new System.Windows.Forms.ComboBox();
@@ -81,10 +76,8 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.CpvcRadioBtn = new System.Windows.Forms.RadioButton();
             this.CopperRadioBtn = new System.Windows.Forms.RadioButton();
             this.GasTab = new System.Windows.Forms.TabPage();
+            this.GasMaxLabel = new System.Windows.Forms.Label();
             this.WaterLenthLabel = new System.Windows.Forms.Label();
-            this.GasLeaderLocationBox = new System.Windows.Forms.GroupBox();
-            this.GasRightLeaderLocation = new System.Windows.Forms.RadioButton();
-            this.GasLeftLeaderLocation = new System.Windows.Forms.RadioButton();
             this.GasTotalLengthLabel = new System.Windows.Forms.Label();
             this.GasReset = new System.Windows.Forms.Button();
             this.GasSelectBtn = new System.Windows.Forms.Button();
@@ -101,9 +94,6 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.LowPressureGasRadioBtn = new System.Windows.Forms.RadioButton();
             this.StormDrainTab = new System.Windows.Forms.TabPage();
             this.StormDrainMaxLabel = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.RightLeaderRadioBtn = new System.Windows.Forms.RadioButton();
-            this.LeftLeaderRadioBtn = new System.Windows.Forms.RadioButton();
             this.GroupBoxStormDrain = new System.Windows.Forms.GroupBox();
             this.StormDrainRadioBtn3Hr = new System.Windows.Forms.RadioButton();
             this.StormDrainRadioBtn2Hr = new System.Windows.Forms.RadioButton();
@@ -125,19 +115,15 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.PipeSumTab.SuspendLayout();
             this.SanitaryTab.SuspendLayout();
-            this.SanitationHeadLocation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SanitationGridView)).BeginInit();
             this.WaterTab.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.WaterSystemGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WaterDataGrid)).BeginInit();
             this.WaterMeterialGroupBox.SuspendLayout();
             this.GasTab.SuspendLayout();
-            this.GasLeaderLocationBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GasDataGrid)).BeginInit();
             this.PressureBox.SuspendLayout();
             this.StormDrainTab.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.GroupBoxStormDrain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StormDrainGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
@@ -158,7 +144,6 @@ namespace K2dPlugin.Features.PipeSum.Form
             // 
             // SanitaryTab
             // 
-            this.SanitaryTab.Controls.Add(this.SanitationHeadLocation);
             this.SanitaryTab.Controls.Add(this.ApplyBtn);
             this.SanitaryTab.Controls.Add(this.PipeSizeLabel);
             this.SanitaryTab.Controls.Add(this.PipeSizeComboBox);
@@ -180,41 +165,6 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.SanitaryTab.Text = "Sanitary";
             this.SanitaryTab.UseVisualStyleBackColor = true;
             // 
-            // SanitationHeadLocation
-            // 
-            this.SanitationHeadLocation.Controls.Add(this.RIghtArrowLocation);
-            this.SanitationHeadLocation.Controls.Add(this.LeftArrowLocation);
-            this.SanitationHeadLocation.Location = new System.Drawing.Point(33, 228);
-            this.SanitationHeadLocation.Name = "SanitationHeadLocation";
-            this.SanitationHeadLocation.Size = new System.Drawing.Size(200, 53);
-            this.SanitationHeadLocation.TabIndex = 17;
-            this.SanitationHeadLocation.TabStop = false;
-            this.SanitationHeadLocation.Text = "Leader Location";
-            // 
-            // RIghtArrowLocation
-            // 
-            this.RIghtArrowLocation.AutoSize = true;
-            this.RIghtArrowLocation.Location = new System.Drawing.Point(112, 22);
-            this.RIghtArrowLocation.Name = "RIghtArrowLocation";
-            this.RIghtArrowLocation.Size = new System.Drawing.Size(53, 17);
-            this.RIghtArrowLocation.TabIndex = 1;
-            this.RIghtArrowLocation.TabStop = true;
-            this.RIghtArrowLocation.Text = "Right";
-            this.RIghtArrowLocation.UseVisualStyleBackColor = true;
-            this.RIghtArrowLocation.CheckedChanged += new System.EventHandler(this.RIghtArrowLocation_CheckedChanged);
-            // 
-            // LeftArrowLocation
-            // 
-            this.LeftArrowLocation.AutoSize = true;
-            this.LeftArrowLocation.Location = new System.Drawing.Point(28, 22);
-            this.LeftArrowLocation.Name = "LeftArrowLocation";
-            this.LeftArrowLocation.Size = new System.Drawing.Size(44, 17);
-            this.LeftArrowLocation.TabIndex = 0;
-            this.LeftArrowLocation.TabStop = true;
-            this.LeftArrowLocation.Text = "Left";
-            this.LeftArrowLocation.UseVisualStyleBackColor = true;
-            this.LeftArrowLocation.CheckedChanged += new System.EventHandler(this.LeftArrowLocation_CheckedChanged);
-            // 
             // ApplyBtn
             // 
             this.ApplyBtn.BackColor = System.Drawing.Color.Transparent;
@@ -230,7 +180,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             // PipeSizeLabel
             // 
             this.PipeSizeLabel.AutoSize = true;
-            this.PipeSizeLabel.Location = new System.Drawing.Point(30, 126);
+            this.PipeSizeLabel.Location = new System.Drawing.Point(30, 142);
             this.PipeSizeLabel.Name = "PipeSizeLabel";
             this.PipeSizeLabel.Size = new System.Drawing.Size(55, 13);
             this.PipeSizeLabel.TabIndex = 15;
@@ -238,9 +188,8 @@ namespace K2dPlugin.Features.PipeSum.Form
             // 
             // PipeSizeComboBox
             // 
-            this.PipeSizeComboBox.Enabled = false;
             this.PipeSizeComboBox.FormattingEnabled = true;
-            this.PipeSizeComboBox.Location = new System.Drawing.Point(134, 123);
+            this.PipeSizeComboBox.Location = new System.Drawing.Point(134, 139);
             this.PipeSizeComboBox.Name = "PipeSizeComboBox";
             this.PipeSizeComboBox.Size = new System.Drawing.Size(125, 21);
             this.PipeSizeComboBox.TabIndex = 14;
@@ -340,7 +289,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             // SanitaionMaxUnitLabel
             // 
             this.SanitaionMaxUnitLabel.AutoSize = true;
-            this.SanitaionMaxUnitLabel.Location = new System.Drawing.Point(30, 199);
+            this.SanitaionMaxUnitLabel.Location = new System.Drawing.Point(30, 246);
             this.SanitaionMaxUnitLabel.Name = "SanitaionMaxUnitLabel";
             this.SanitaionMaxUnitLabel.Size = new System.Drawing.Size(59, 13);
             this.SanitaionMaxUnitLabel.TabIndex = 8;
@@ -349,7 +298,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             // SanitationFixtureConnectionLabel
             // 
             this.SanitationFixtureConnectionLabel.AutoSize = true;
-            this.SanitationFixtureConnectionLabel.Location = new System.Drawing.Point(30, 89);
+            this.SanitationFixtureConnectionLabel.Location = new System.Drawing.Point(30, 96);
             this.SanitationFixtureConnectionLabel.Name = "SanitationFixtureConnectionLabel";
             this.SanitationFixtureConnectionLabel.Size = new System.Drawing.Size(108, 13);
             this.SanitationFixtureConnectionLabel.TabIndex = 3;
@@ -358,7 +307,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             // FixtureConnectionBox
             // 
             this.FixtureConnectionBox.Enabled = false;
-            this.FixtureConnectionBox.Location = new System.Drawing.Point(159, 86);
+            this.FixtureConnectionBox.Location = new System.Drawing.Point(159, 93);
             this.FixtureConnectionBox.Name = "FixtureConnectionBox";
             this.FixtureConnectionBox.Size = new System.Drawing.Size(100, 22);
             this.FixtureConnectionBox.TabIndex = 7;
@@ -366,7 +315,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             // SanitationOverrideBtn
             // 
             this.SanitationOverrideBtn.ForeColor = System.Drawing.Color.IndianRed;
-            this.SanitationOverrideBtn.Location = new System.Drawing.Point(33, 153);
+            this.SanitationOverrideBtn.Location = new System.Drawing.Point(33, 181);
             this.SanitationOverrideBtn.Name = "SanitationOverrideBtn";
             this.SanitationOverrideBtn.Size = new System.Drawing.Size(81, 29);
             this.SanitationOverrideBtn.TabIndex = 6;
@@ -395,7 +344,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             // 
             // WaterTab
             // 
-            this.WaterTab.Controls.Add(this.groupBox2);
+            this.WaterTab.Controls.Add(this.WaterMaxUnit);
             this.WaterTab.Controls.Add(this.WaterApplyBtn);
             this.WaterTab.Controls.Add(this.WaterPipeSizeLabel);
             this.WaterTab.Controls.Add(this.WaterPipeSizeComboBox);
@@ -418,38 +367,14 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.WaterTab.Text = "Water";
             this.WaterTab.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // WaterMaxUnit
             // 
-            this.groupBox2.Controls.Add(this.radioButton1);
-            this.groupBox2.Controls.Add(this.radioButton2);
-            this.groupBox2.Location = new System.Drawing.Point(41, 254);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 53);
-            this.groupBox2.TabIndex = 38;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Leader Location";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(112, 22);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(53, 17);
-            this.radioButton1.TabIndex = 1;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Right";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(28, 22);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(44, 17);
-            this.radioButton2.TabIndex = 0;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Left";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.WaterMaxUnit.AutoSize = true;
+            this.WaterMaxUnit.Location = new System.Drawing.Point(31, 286);
+            this.WaterMaxUnit.Name = "WaterMaxUnit";
+            this.WaterMaxUnit.Size = new System.Drawing.Size(59, 13);
+            this.WaterMaxUnit.TabIndex = 38;
+            this.WaterMaxUnit.Text = "Max Unit: ";
             // 
             // WaterApplyBtn
             // 
@@ -474,11 +399,10 @@ namespace K2dPlugin.Features.PipeSum.Form
             // 
             // WaterPipeSizeComboBox
             // 
-            this.WaterPipeSizeComboBox.Enabled = false;
             this.WaterPipeSizeComboBox.FormattingEnabled = true;
-            this.WaterPipeSizeComboBox.Location = new System.Drawing.Point(123, 207);
+            this.WaterPipeSizeComboBox.Location = new System.Drawing.Point(157, 207);
             this.WaterPipeSizeComboBox.Name = "WaterPipeSizeComboBox";
-            this.WaterPipeSizeComboBox.Size = new System.Drawing.Size(75, 21);
+            this.WaterPipeSizeComboBox.Size = new System.Drawing.Size(129, 21);
             this.WaterPipeSizeComboBox.TabIndex = 35;
             this.WaterPipeSizeComboBox.Text = "Select Size";
             this.WaterPipeSizeComboBox.Visible = false;
@@ -487,7 +411,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             // WaterOverrideBtn
             // 
             this.WaterOverrideBtn.ForeColor = System.Drawing.Color.IndianRed;
-            this.WaterOverrideBtn.Location = new System.Drawing.Point(211, 202);
+            this.WaterOverrideBtn.Location = new System.Drawing.Point(24, 233);
             this.WaterOverrideBtn.Name = "WaterOverrideBtn";
             this.WaterOverrideBtn.Size = new System.Drawing.Size(81, 29);
             this.WaterOverrideBtn.TabIndex = 33;
@@ -511,7 +435,6 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.PsiPerFootComboBox.Name = "PsiPerFootComboBox";
             this.PsiPerFootComboBox.Size = new System.Drawing.Size(135, 21);
             this.PsiPerFootComboBox.TabIndex = 31;
-            this.PsiPerFootComboBox.Text = "12.8";
             this.PsiPerFootComboBox.SelectedIndexChanged += new System.EventHandler(this.PsiPerFootComboBox_SelectedIndexChanged);
             // 
             // WaterTotalSelectedLabel
@@ -559,7 +482,6 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.FlushSettingComboBox.Name = "FlushSettingComboBox";
             this.FlushSettingComboBox.Size = new System.Drawing.Size(114, 21);
             this.FlushSettingComboBox.TabIndex = 26;
-            this.FlushSettingComboBox.Text = "Flush Tank";
             this.FlushSettingComboBox.SelectedIndexChanged += new System.EventHandler(this.FlushSettingComboBox_SelectedIndexChanged);
             // 
             // WaterSystemGroupBox
@@ -709,8 +631,8 @@ namespace K2dPlugin.Features.PipeSum.Form
             // 
             // GasTab
             // 
+            this.GasTab.Controls.Add(this.GasMaxLabel);
             this.GasTab.Controls.Add(this.WaterLenthLabel);
-            this.GasTab.Controls.Add(this.GasLeaderLocationBox);
             this.GasTab.Controls.Add(this.GasTotalLengthLabel);
             this.GasTab.Controls.Add(this.GasReset);
             this.GasTab.Controls.Add(this.GasSelectBtn);
@@ -727,6 +649,15 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.GasTab.Text = "Gas";
             this.GasTab.UseVisualStyleBackColor = true;
             // 
+            // GasMaxLabel
+            // 
+            this.GasMaxLabel.AutoSize = true;
+            this.GasMaxLabel.Location = new System.Drawing.Point(29, 262);
+            this.GasMaxLabel.Name = "GasMaxLabel";
+            this.GasMaxLabel.Size = new System.Drawing.Size(59, 13);
+            this.GasMaxLabel.TabIndex = 39;
+            this.GasMaxLabel.Text = "Max Unit: ";
+            // 
             // WaterLenthLabel
             // 
             this.WaterLenthLabel.AutoSize = true;
@@ -735,41 +666,6 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.WaterLenthLabel.Size = new System.Drawing.Size(49, 13);
             this.WaterLenthLabel.TabIndex = 29;
             this.WaterLenthLabel.Text = "Length: ";
-            // 
-            // GasLeaderLocationBox
-            // 
-            this.GasLeaderLocationBox.Controls.Add(this.GasRightLeaderLocation);
-            this.GasLeaderLocationBox.Controls.Add(this.GasLeftLeaderLocation);
-            this.GasLeaderLocationBox.Location = new System.Drawing.Point(32, 222);
-            this.GasLeaderLocationBox.Name = "GasLeaderLocationBox";
-            this.GasLeaderLocationBox.Size = new System.Drawing.Size(200, 53);
-            this.GasLeaderLocationBox.TabIndex = 28;
-            this.GasLeaderLocationBox.TabStop = false;
-            this.GasLeaderLocationBox.Text = "Leader Location";
-            // 
-            // GasRightLeaderLocation
-            // 
-            this.GasRightLeaderLocation.AutoSize = true;
-            this.GasRightLeaderLocation.Location = new System.Drawing.Point(112, 22);
-            this.GasRightLeaderLocation.Name = "GasRightLeaderLocation";
-            this.GasRightLeaderLocation.Size = new System.Drawing.Size(53, 17);
-            this.GasRightLeaderLocation.TabIndex = 1;
-            this.GasRightLeaderLocation.TabStop = true;
-            this.GasRightLeaderLocation.Text = "Right";
-            this.GasRightLeaderLocation.UseVisualStyleBackColor = true;
-            this.GasRightLeaderLocation.CheckedChanged += new System.EventHandler(this.GasRightLeaderLocation_CheckedChanged);
-            // 
-            // GasLeftLeaderLocation
-            // 
-            this.GasLeftLeaderLocation.AutoSize = true;
-            this.GasLeftLeaderLocation.Location = new System.Drawing.Point(28, 22);
-            this.GasLeftLeaderLocation.Name = "GasLeftLeaderLocation";
-            this.GasLeftLeaderLocation.Size = new System.Drawing.Size(44, 17);
-            this.GasLeftLeaderLocation.TabIndex = 0;
-            this.GasLeftLeaderLocation.TabStop = true;
-            this.GasLeftLeaderLocation.Text = "Left";
-            this.GasLeftLeaderLocation.UseVisualStyleBackColor = true;
-            this.GasLeftLeaderLocation.CheckedChanged += new System.EventHandler(this.GasLeftLeaderLocation_CheckedChanged);
             // 
             // GasTotalLengthLabel
             // 
@@ -815,7 +711,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             // GasPipeSizelabel
             // 
             this.GasPipeSizelabel.AutoSize = true;
-            this.GasPipeSizelabel.Location = new System.Drawing.Point(29, 189);
+            this.GasPipeSizelabel.Location = new System.Drawing.Point(29, 204);
             this.GasPipeSizelabel.Name = "GasPipeSizelabel";
             this.GasPipeSizelabel.Size = new System.Drawing.Size(55, 13);
             this.GasPipeSizelabel.TabIndex = 22;
@@ -927,7 +823,6 @@ namespace K2dPlugin.Features.PipeSum.Form
             // StormDrainTab
             // 
             this.StormDrainTab.Controls.Add(this.StormDrainMaxLabel);
-            this.StormDrainTab.Controls.Add(this.groupBox1);
             this.StormDrainTab.Controls.Add(this.GroupBoxStormDrain);
             this.StormDrainTab.Controls.Add(this.StormDrainTotalSelectedLabel);
             this.StormDrainTab.Controls.Add(this.StormDrainResetBtn);
@@ -948,46 +843,11 @@ namespace K2dPlugin.Features.PipeSum.Form
             // StormDrainMaxLabel
             // 
             this.StormDrainMaxLabel.AutoSize = true;
-            this.StormDrainMaxLabel.Location = new System.Drawing.Point(32, 199);
+            this.StormDrainMaxLabel.Location = new System.Drawing.Point(32, 226);
             this.StormDrainMaxLabel.Name = "StormDrainMaxLabel";
             this.StormDrainMaxLabel.Size = new System.Drawing.Size(59, 13);
             this.StormDrainMaxLabel.TabIndex = 24;
             this.StormDrainMaxLabel.Text = "Max Unit: ";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.RightLeaderRadioBtn);
-            this.groupBox1.Controls.Add(this.LeftLeaderRadioBtn);
-            this.groupBox1.Location = new System.Drawing.Point(35, 232);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 53);
-            this.groupBox1.TabIndex = 23;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Leader Location";
-            // 
-            // RightLeaderRadioBtn
-            // 
-            this.RightLeaderRadioBtn.AutoSize = true;
-            this.RightLeaderRadioBtn.Location = new System.Drawing.Point(112, 22);
-            this.RightLeaderRadioBtn.Name = "RightLeaderRadioBtn";
-            this.RightLeaderRadioBtn.Size = new System.Drawing.Size(53, 17);
-            this.RightLeaderRadioBtn.TabIndex = 1;
-            this.RightLeaderRadioBtn.TabStop = true;
-            this.RightLeaderRadioBtn.Text = "Right";
-            this.RightLeaderRadioBtn.UseVisualStyleBackColor = true;
-            this.RightLeaderRadioBtn.CheckedChanged += new System.EventHandler(this.RightLeaderRadioBtn_CheckedChanged);
-            // 
-            // LeftLeaderRadioBtn
-            // 
-            this.LeftLeaderRadioBtn.AutoSize = true;
-            this.LeftLeaderRadioBtn.Location = new System.Drawing.Point(28, 22);
-            this.LeftLeaderRadioBtn.Name = "LeftLeaderRadioBtn";
-            this.LeftLeaderRadioBtn.Size = new System.Drawing.Size(44, 17);
-            this.LeftLeaderRadioBtn.TabIndex = 0;
-            this.LeftLeaderRadioBtn.TabStop = true;
-            this.LeftLeaderRadioBtn.Text = "Left";
-            this.LeftLeaderRadioBtn.UseVisualStyleBackColor = true;
-            this.LeftLeaderRadioBtn.CheckedChanged += new System.EventHandler(this.LeftLeaderRadioBtn_CheckedChanged);
             // 
             // GroupBoxStormDrain
             // 
@@ -1142,7 +1002,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             // StormDrainOverrideBtn
             // 
             this.StormDrainOverrideBtn.ForeColor = System.Drawing.Color.IndianRed;
-            this.StormDrainOverrideBtn.Location = new System.Drawing.Point(35, 151);
+            this.StormDrainOverrideBtn.Location = new System.Drawing.Point(35, 162);
             this.StormDrainOverrideBtn.Name = "StormDrainOverrideBtn";
             this.StormDrainOverrideBtn.Size = new System.Drawing.Size(101, 29);
             this.StormDrainOverrideBtn.TabIndex = 7;
@@ -1152,11 +1012,10 @@ namespace K2dPlugin.Features.PipeSum.Form
             // 
             // StormDrainSizeComboBox
             // 
-            this.StormDrainSizeComboBox.Enabled = false;
             this.StormDrainSizeComboBox.FormattingEnabled = true;
-            this.StormDrainSizeComboBox.Location = new System.Drawing.Point(135, 115);
+            this.StormDrainSizeComboBox.Location = new System.Drawing.Point(156, 115);
             this.StormDrainSizeComboBox.Name = "StormDrainSizeComboBox";
-            this.StormDrainSizeComboBox.Size = new System.Drawing.Size(113, 21);
+            this.StormDrainSizeComboBox.Size = new System.Drawing.Size(138, 21);
             this.StormDrainSizeComboBox.TabIndex = 3;
             this.StormDrainSizeComboBox.Text = "Select Override Size";
             this.StormDrainSizeComboBox.Visible = false;
@@ -1200,18 +1059,14 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.MaximizeBox = false;
             this.Name = "PipeSumForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "PipeSumForm";
+            this.Text = "Pipe Sum Form v1.0";
             this.Load += new System.EventHandler(this.PipeSumForm_Load);
             this.PipeSumTab.ResumeLayout(false);
             this.SanitaryTab.ResumeLayout(false);
             this.SanitaryTab.PerformLayout();
-            this.SanitationHeadLocation.ResumeLayout(false);
-            this.SanitationHeadLocation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SanitationGridView)).EndInit();
             this.WaterTab.ResumeLayout(false);
             this.WaterTab.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.WaterSystemGroupBox.ResumeLayout(false);
             this.WaterSystemGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WaterDataGrid)).EndInit();
@@ -1219,15 +1074,11 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.WaterMeterialGroupBox.PerformLayout();
             this.GasTab.ResumeLayout(false);
             this.GasTab.PerformLayout();
-            this.GasLeaderLocationBox.ResumeLayout(false);
-            this.GasLeaderLocationBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GasDataGrid)).EndInit();
             this.PressureBox.ResumeLayout(false);
             this.PressureBox.PerformLayout();
             this.StormDrainTab.ResumeLayout(false);
             this.StormDrainTab.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.GroupBoxStormDrain.ResumeLayout(false);
             this.GroupBoxStormDrain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StormDrainGridView)).EndInit();
@@ -1277,22 +1128,13 @@ namespace K2dPlugin.Features.PipeSum.Form
         private System.Windows.Forms.DataGridViewTextBoxColumn Count;
         private System.Windows.Forms.DataGridViewTextBoxColumn PipeSize;
         private System.Windows.Forms.DataGridViewTextBoxColumn Units;
-        private GroupBox SanitationHeadLocation;
-        private RadioButton RIghtArrowLocation;
-        private RadioButton LeftArrowLocation;
         private GroupBox GroupBoxStormDrain;
         private RadioButton StormDrainRadioBtn2Hr;
         private RadioButton StormDrainRadioBtn1Hr;
         private RadioButton StormDrainRadioBtn3Hr;
-        private GroupBox groupBox1;
-        private RadioButton RightLeaderRadioBtn;
-        private RadioButton LeftLeaderRadioBtn;
         private Label StormDrainMaxLabel;
         private DataGridView GasDataGrid;
         private Label GasPipeSizelabel;
-        private GroupBox GasLeaderLocationBox;
-        private RadioButton GasRightLeaderLocation;
-        private RadioButton GasLeftLeaderLocation;
         private Label GasTotalLengthLabel;
         private Button GasReset;
         private Button GasSelectBtn;
@@ -1327,8 +1169,7 @@ namespace K2dPlugin.Features.PipeSum.Form
         private Button WaterRestBtn;
         private Button WaterSelectBtn;
         private Label WaterLenthLabel;
-        private GroupBox groupBox2;
-        private RadioButton radioButton1;
-        private RadioButton radioButton2;
+        private Label WaterMaxUnit;
+        private Label GasMaxLabel;
     }
 }

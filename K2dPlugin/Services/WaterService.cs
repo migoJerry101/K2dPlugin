@@ -167,7 +167,7 @@ namespace K2dPlugin.Services
             { 12.2, new List<int> { 4, 13, 30, 56, 103, 254, 455, 719, 1091, 1668 } },
             { 12.4, new List<int> { 4, 13, 30, 56, 103, 254, 455, 719, 1091, 1668 } },
             { 12.6, new List<int> { 4, 13, 30, 56, 103, 254, 455, 719, 1091, 1668 } },
-            { 12.8, new List<int> { 4, 13, 30, 56, 103, 254, 455, 719, 1091, 166 } }
+            { 12.8, new List<int> { 4, 13, 30, 56, 103, 254, 455, 719, 1091, 1668 } }
         };
 
         private static readonly Dictionary<double, List<int>> CopperFlushValveCold = new Dictionary<double, List<int>>
@@ -524,7 +524,7 @@ namespace K2dPlugin.Services
         {
             var data = new List<string>
             {
-                "1/2", "3/4", "1", "1-1/4", "1-1/2", "2", "2-1/2", "3","3-1/2", "4"
+                "1/2", "3/4", "1", "1-1/4", "1-1/2", "2", "2-1/2", "3","4", "4"
             };
 
             return data;
@@ -547,7 +547,7 @@ namespace K2dPlugin.Services
         {
             var data = new List<string>
             {
-                "1/2", "3/4", "1", "1-1/4", "1-1/2", "2", "2-1/2", "3","3-1/2", "4"
+                "1/2", "3/4", "1", "1-1/4", "1-1/2", "2", "2-1/2", "3","4", "4"
             };
 
             return data;

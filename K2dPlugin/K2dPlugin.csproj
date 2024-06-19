@@ -31,16 +31,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdWindows, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Revit_All_Main_Versions_API_x64.2021.0.0\lib\net48\AdWindows.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
       <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI">
       <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,6 +56,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIFramework, Version=21.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\Revit_All_Main_Versions_API_x64.2021.0.0\lib\net48\UIFramework.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -94,16 +102,10 @@
     <Folder Include="Features\PipeSum\Dto\Gas\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Lookup\STORM_DRAIN_PIPE_SIZING.txt" />
-    <Content Include="Resources\pipe.ico" />
-    <None Include="Resources\Lookup\STORM_DRAIN_PIPE_SIZING.csv" />
-    <None Include="Resources\Lookup\WASTE_SIZING.csv" />
-    <Content Include="Resources\Lookup\WATER_FlushTankCold-COPPER.txt" />
-    <Content Include="Resources\Lookup\WATER_FlushTankCold-CPVC.txt" />
-    <Content Include="Resources\Lookup\WATER_FlushTankHot-COPPER.txt" />
-    <Content Include="Resources\Lookup\WATER_FlushTankHot-CPVC.txt" />
-    <Content Include="Resources\Lookup\WATER_FlushValveCold-COPPER.txt" />
-    <Content Include="Resources\Lookup\WATER_FlushValveCold-CPVC.txt" />
+    <Resource Include="Resources\pipe.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
