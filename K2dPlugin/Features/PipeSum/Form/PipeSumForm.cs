@@ -50,6 +50,8 @@ namespace K2dPlugin.Features.PipeSum.Form
         private static WaterPipeMaterialType _waterPipeMaterial = WaterPipeMaterialType.COPPER;
         private static bool _isSelect = true;
         private static bool _isUpdate;
+        private static bool _isMessageBoxShown = false;
+        private static bool _isProgrammaticChange = false;
 
 
         private static bool _isOverride;
@@ -60,7 +62,9 @@ namespace K2dPlugin.Features.PipeSum.Form
         private static bool _isOnRight;
         private static XYZ _location;
         private static bool _comboBoxIsSet;
+        private static bool _comboBoxFlushIsSet;
         private static string selectedSanitationItem;
+        private static string selectedFlushSetting;
 
         private static double _temporaryPipeSize = 0;
         private static string _temporaryPipeSizeWater = string.Empty;
@@ -97,6 +101,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             {
                 FlushSettingComboBox.Items.Add("Flush Tank");
                 FlushSettingComboBox.Items.Add("Flush Valve");
+
             }
 
             if (_isGasLow)
@@ -134,10 +139,33 @@ namespace K2dPlugin.Features.PipeSum.Form
             }
 
             SanitationComboBox.SelectedItem = _comboBoxIsSet ? selectedSanitationItem : "Select Pipe System";
+            FlushSettingComboBox.SelectedItem = _comboBoxFlushIsSet ? selectedFlushSetting : "Select Flush Settings";
 
             SanitationGridView.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             SanitationGridView.ReadOnly = true;
 
+            PipeSumTab.SelectedIndex = (int)_tabType;
+            if (_isSelect)
+            {
+                GetElementId();
+                FormDataPopulateSwitch();
+            }
+            else
+            {
+                var forUpdate = GetSelectedDataFromRevit(true);
+
+
+                if (forUpdate.Any()) UpdateSanitaryText(forUpdate.FirstOrDefault().Id);
+                FormDataPopulateSwitch();
+
+                this.BringToFront();
+            }
+
+
+            if (_location != null)
+            {
+                this.Location = new System.Drawing.Point((int)_location.X, (int)_location.Y);
+            }
         }   
 
         private void PipeSum_SelectedIndexChanged(object sender, EventArgs e)
@@ -251,28 +279,7 @@ namespace K2dPlugin.Features.PipeSum.Form
         private void PipeSumForm_Load(object sender, EventArgs e)
         {
 
-            PipeSumTab.SelectedIndex = (int)_tabType;
-            if (_isSelect)
-            {
-                GetElementId();
-                FormDataPopulateSwitch();
-            }
-            else
-            {
-                var forUpdate = GetSelectedDataFromRevit(true);
 
-
-                if (forUpdate.Any()) UpdateSanitaryText(forUpdate.FirstOrDefault().Id);
-                FormDataPopulateSwitch();
-
-                this.BringToFront();
-            }
-
-
-            if (_location != null)
-            {
-                this.Location = new System.Drawing.Point((int)_location.X, (int)_location.Y);
-            }
         }
 
         private void SanitationSelectTxtBtn_Click(object sender, EventArgs e)
@@ -517,7 +524,7 @@ namespace K2dPlugin.Features.PipeSum.Form
 
             foreach (var diaDto in DiameterDtos)
             {
-                if (_stormDrainTotalArea >= diaDto.Min && _stormDrainTotalArea < diaDto.Max)
+                if (_stormDrainTotalArea > diaDto.Min && _stormDrainTotalArea <= diaDto.Max)
                 {
                     _pipeSizeData = diaDto.Diameter;
                     StormDrainPipeSizeLabel.Text = @"PipeSize: ";
@@ -590,7 +597,7 @@ namespace K2dPlugin.Features.PipeSum.Form
                 GasMaxLabel.Text = "Max Unit: ";
                 if (_gasTotalLength > diaDto.Min && _gasTotalLength <= diaDto.Max)
                 {
-                    trueIndex = i;
+                    trueIndex = i + 1;
 
                     GasMaxLabel.Text += diaDto.Max;
                     break; 
@@ -606,9 +613,10 @@ namespace K2dPlugin.Features.PipeSum.Form
                 GasPipeSizelabel.Text += _pipeSizeForGas;
             }
 
-            if(trueIndex < 0 && _pipeSizeForGas.Length == 0 && GasDataGrid.Rows.Count > 0 && GasLengthComboBox.Text != null)
+            if(trueIndex < 0 && _pipeSizeForGas.Length == 0 && GasDataGrid.Rows.Count > 0 && GasLengthComboBox.Text != null && !_isMessageBoxShown)
             {
                 MessageBox.Show("Out of Range, Set New Length", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _isMessageBoxShown = true;
             }
         }
 
@@ -953,6 +961,7 @@ namespace K2dPlugin.Features.PipeSum.Form
         private void LowPressureGasRadioBtn_CheckedChanged(object sender, EventArgs e)
         {
             _isGasLow = true;
+            _isMessageBoxShown = false;
             ComputeGasPipeSize();
             /*if (GasDataGrid.Rows.Count > 0) AutoSetSizeGas();*/
         }
@@ -960,6 +969,7 @@ namespace K2dPlugin.Features.PipeSum.Form
         private void RadioBtnPressureMed_CheckedChanged(object sender, EventArgs e)
         {
             _isGasLow = false;
+            _isMessageBoxShown = false;
             ComputeGasPipeSize();
             /*if (GasDataGrid.Rows.Count > 0) AutoSetSizeGas();*/
         }
@@ -994,6 +1004,7 @@ namespace K2dPlugin.Features.PipeSum.Form
 
         private void GasLengthComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            _isMessageBoxShown = false;
             ComputeGasPipeSize();
         }
 
@@ -1028,9 +1039,12 @@ namespace K2dPlugin.Features.PipeSum.Form
         {
             if (FlushSettingComboBox.SelectedItem != null)
             {
+                _comboBoxFlushIsSet = true;
                 _isFlushTank = FlushSettingComboBox.SelectedItem.ToString() == "Flush Tank";
+                selectedFlushSetting = _isFlushTank ? "Flush Tank" : "Flush Valve";
             }
 
+            _isMessageBoxShown = false;
             SetWaterPipePressure();
         }
 
@@ -1092,13 +1106,20 @@ namespace K2dPlugin.Features.PipeSum.Form
 
             }
 
-            if(PsiPerFootComboBox.Items.Count !=0 ) PsiPerFootComboBox.SelectedItem = _PsiPerFootComboBoxKey;
+            if (PsiPerFootComboBox.Items.Count != 0 && PsiPerFootComboBox.SelectedItem == null)
+            {
+                _isProgrammaticChange = true;
+                PsiPerFootComboBox.SelectedItem = _PsiPerFootComboBoxKey;
+
+                _isProgrammaticChange = false;
+            }
         }
 
         private void CopperRadioBtn_CheckedChanged(object sender, EventArgs e)
         {
             if (CopperRadioBtn.Checked)
             {
+                _isMessageBoxShown = false;
                 _waterPipeMaterial = WaterPipeMaterialType.COPPER;
                 _isOverride = false;
                 SetWaterPipePressure();
@@ -1109,6 +1130,7 @@ namespace K2dPlugin.Features.PipeSum.Form
         {
             if (CpvcRadioBtn.Checked)
             {
+                _isMessageBoxShown = false;
                 _waterPipeMaterial = WaterPipeMaterialType.CPVC;
                 _isOverride = false;
                 SetWaterPipePressure();
@@ -1119,6 +1141,7 @@ namespace K2dPlugin.Features.PipeSum.Form
         {
             if (PexRadioBtn.Checked)
             {
+                _isMessageBoxShown = false;
                 _waterPipeMaterial = WaterPipeMaterialType.PEX;
                 _isOverride = false;
                 SetWaterPipePressure();
@@ -1128,6 +1151,7 @@ namespace K2dPlugin.Features.PipeSum.Form
         private void ColdRadioBtn_CheckedChanged(object sender, EventArgs e)
         {
             if (ColdRadioBtn.Checked)_isWaterCold = true;
+            _isMessageBoxShown = false;
 
             SetWaterPipePressure();
         }
@@ -1135,6 +1159,7 @@ namespace K2dPlugin.Features.PipeSum.Form
         private void HotRadioBtn_CheckedChanged(object sender, EventArgs e)
         {
             if (HotRadioBtn.Checked)_isWaterCold = false;
+            _isMessageBoxShown = false;
 
             SetWaterPipePressure();
         }
@@ -1142,6 +1167,9 @@ namespace K2dPlugin.Features.PipeSum.Form
         private void PsiPerFootComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             _waterPipeDtos = new List<PipeDiameterDto>();
+
+            if(!_isProgrammaticChange) _isMessageBoxShown = false;
+
             PsiPerFootLabel.Text = "PSI/Foot: ";
 
             if (PsiPerFootComboBox.SelectedItem != null)
@@ -1170,7 +1198,7 @@ namespace K2dPlugin.Features.PipeSum.Form
                     case WaterPipeMaterialType.CPVC:
                         dtoSource = _isFlushTank
                             ? _waterService.GetListOfCpvcFlushTankByKey(key)
-                            : _waterService.GetListPexFlushValveByKey(key);
+                            : _waterService.GetListOfCpvcFlushValveByKey(key);
 
                         break;
                     case WaterPipeMaterialType.PEX:
@@ -1195,7 +1223,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             }
 
 
-            if (!_isOverride && WaterDataGrid.Rows.Count > 0) AutoSetSizeWater();
+            if (!_isOverride && WaterDataGrid.Rows.Count > 0 && !_isMessageBoxShown) AutoSetSizeWater();
         }
 
         private void AutoSetSizeWater()
@@ -1215,7 +1243,32 @@ namespace K2dPlugin.Features.PipeSum.Form
                     WaterMaxUnit.Text = "Max Unit: ";
                     WaterMaxUnit.Text += diaDto.Max;
 
-                    trueIndex = i;
+                    switch (_waterPipeMaterial)
+                    {
+                        case WaterPipeMaterialType.COPPER:
+                            trueIndex = i+1;
+
+                            break;
+                        case WaterPipeMaterialType.CPVC:
+                            trueIndex = i+1;
+
+                            break;
+                        case WaterPipeMaterialType.PEX:
+                            trueIndex = i + 1;
+                            break;
+                        default:
+                            trueIndex = i + 1;
+                            break;
+                    }
+
+                    //trueIndex = i + 1;
+
+
+                    //if (trueIndex > _waterPipeDtos.Count-1)
+                    //{
+                    //    trueIndex = trueIndex - 1;
+                    //}
+
                     break;
                 }
             }
@@ -1261,7 +1314,63 @@ namespace K2dPlugin.Features.PipeSum.Form
 
             if (trueIndex < 0 && WaterDataGrid.Rows.Count > 0)
             {
-                MessageBox.Show("Out of Range, Set New Length", "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                var lastMaxPsiPerLength = new List<int>();
+                switch (_waterPipeMaterial)
+                {
+                    case WaterPipeMaterialType.COPPER:
+                        if (_isFlushTank)
+                        {
+                            lastMaxPsiPerLength = _isWaterCold
+                                ? _waterService.GetListOfCopperFlushTankColdByKey(12.8)
+                                : _waterService.GetListOfCopperFlushTankHotByKey(25);
+                        }
+                        else
+                        {
+                            lastMaxPsiPerLength = _waterService.GetListOfCopperFlushValveColdByKey(25);
+                        }
+
+                        break;
+                    case WaterPipeMaterialType.CPVC:
+                        lastMaxPsiPerLength = _isFlushTank
+                            ? _waterService.GetListOfCpvcFlushTankByKey(13.7)
+                            : _waterService.GetListOfCpvcFlushValveByKey(13.7);
+
+                        break;
+                    case WaterPipeMaterialType.PEX:
+                        lastMaxPsiPerLength = _isFlushTank
+                            ? _waterService.GetListPexFlushTankByKey(15)
+                            : _waterService.GetListPexFlushValveByKey(15.0);
+                        break;
+                    default:
+                        break;
+                }
+
+
+                if (_waterTotal > lastMaxPsiPerLength.LastOrDefault() && !_isMessageBoxShown)
+                {
+                    WaterMaxUnit.Text = "Max Unit: ";
+                    WaterMaxUnit.Text += lastMaxPsiPerLength.LastOrDefault();
+                    _isMessageBoxShown = true;
+
+                    MessageBox.Show("change pipe material, Total Selected out of Range", "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+
+                if(trueIndex < 0 && !_isMessageBoxShown)
+                {
+                    if (_waterPipeDtos.Count > 0)
+                    {
+                        var max = _waterPipeDtos.LastOrDefault().Max;
+                        WaterMaxUnit.Text = "Max Unit: ";
+                        WaterMaxUnit.Text += max.ToString();
+                    }
+
+
+                    MessageBox.Show("Total Selected Out of Range, Plese Select Higher Psi/Foot", "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _isMessageBoxShown = true;
+                }
+
+
             }
         }
 
@@ -1323,6 +1432,8 @@ namespace K2dPlugin.Features.PipeSum.Form
             WaterPipeSizeComboBox.Items.Clear();
             WaterPipeSizeComboBox.Visible = false;
             _waterTotal = 0;
+            _isMessageBoxShown = false;
+            _isProgrammaticChange = false;
 
             PsiPerFootLabel.Text = "PSI/Foot: ";
             WaterPipeSizeLabel.Text = "Pipe Size: ";

@@ -435,7 +435,6 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.PsiPerFootComboBox.Name = "PsiPerFootComboBox";
             this.PsiPerFootComboBox.Size = new System.Drawing.Size(135, 21);
             this.PsiPerFootComboBox.TabIndex = 31;
-            this.PsiPerFootComboBox.Text = "2";
             this.PsiPerFootComboBox.SelectedIndexChanged += new System.EventHandler(this.PsiPerFootComboBox_SelectedIndexChanged);
             // 
             // WaterTotalSelectedLabel
@@ -483,7 +482,6 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.FlushSettingComboBox.Name = "FlushSettingComboBox";
             this.FlushSettingComboBox.Size = new System.Drawing.Size(114, 21);
             this.FlushSettingComboBox.TabIndex = 26;
-            this.FlushSettingComboBox.Text = "Flush Tank";
             this.FlushSettingComboBox.SelectedIndexChanged += new System.EventHandler(this.FlushSettingComboBox_SelectedIndexChanged);
             // 
             // WaterSystemGroupBox
@@ -1061,7 +1059,7 @@ namespace K2dPlugin.Features.PipeSum.Form
             this.MaximizeBox = false;
             this.Name = "PipeSumForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "PipeSumForm";
+            this.Text = "Pipe Sum Form v1.0";
             this.Load += new System.EventHandler(this.PipeSumForm_Load);
             this.PipeSumTab.ResumeLayout(false);
             this.SanitaryTab.ResumeLayout(false);
