@@ -10,12 +10,16 @@ using K2dPlugin.Features.PipeSum;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Events;
+using K2dPlugin.Features.CopyElementFromLink;
+using K2dPlugin.Features.CopyElementFromLink.CopyElementForm;
+using K2dPlugin.Features.GenerateReport;
+using K2dPlugin.Features.GetLocattion;
 
 
 namespace K2dPlugin
 {
     [Transaction(TransactionMode.Manual)]
-    //[Regeneration(RegenerationOption.Manual)]
+    [Regeneration(RegenerationOption.Manual)]
     public class Application : IExternalApplication
     {
 
@@ -32,13 +36,38 @@ namespace K2dPlugin
             if (panel.AddItem(new PushButtonData("Pipe Sum", "Pipe Sum", assemblyPath, typeof(PipeSumCommand).ToString()))
                 is PushButton button)
             {
-                button.ToolTip = "Pipe Sum";
-
                 var uri = new Uri(Path.Combine(Path.GetDirectoryName(assemblyPath), "Resources", "pipe.ico"));
                 var bitmap = new BitmapImage(uri);
 
                 button.LargeImage = bitmap;
             }
+
+            if (panel.AddItem(new PushButtonData("Batch Copy", "Batch Copy", assemblyPath, typeof(CopyElementFromLinkCommand).ToString()))
+                is PushButton button1)
+            {
+                var uri = new Uri(Path.Combine(Path.GetDirectoryName(assemblyPath), "Resources", "Copy.ico"));
+                var bitmap = new BitmapImage(uri);
+
+                button1.LargeImage = bitmap;
+            }
+
+            if (panel.AddItem(new PushButtonData("Generate Report", "Generate Report", assemblyPath, typeof(GenerateReportCommand).ToString()))
+                is PushButton button2)
+            {
+                var uri = new Uri(Path.Combine(Path.GetDirectoryName(assemblyPath), "Resources", "Copy.ico"));
+                var bitmap = new BitmapImage(uri);
+
+                button2.LargeImage = bitmap;
+            }
+
+            //if (panel.AddItem(new PushButtonData("Get Location", "Get Location", assemblyPath, typeof(GetLocationCommand).ToString()))
+            //    is PushButton button3)
+            //{
+            //    var uri = new Uri(Path.Combine(Path.GetDirectoryName(assemblyPath), "Resources", "Copy.ico"));
+            //    var bitmap = new BitmapImage(uri);
+
+            //    button3.LargeImage = bitmap;
+            //}
 
             return Result.Succeeded;
         }
